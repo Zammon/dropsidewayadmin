@@ -1,0 +1,90 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.area-box-reports{
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+    height: auto;
+    min-width: 1231px;
+    min-height: 121px;
+    margin-top: 46px;
+    /* background-color: blue; */
+}
+
+.box-reports{
+    display: flex;
+    padding: 20px 0;
+    justify-content: space-evenly;
+    width: 403px;
+    height: 121px;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.12);
+}
+
+.box-reports:hover {
+    cursor: pointer;
+}
+
+.amount-reports {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.amount-numbers {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.area-text-reports {
+    width: 243px;
+    height: auto;
+    /* background-color: blueviolet; */
+}
+
+.title-text-reports {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.detail-text-reports {
+    font-size: 12px;
+    font-weight: 400;
+    color: #8B8B8B;
+}
+
+.text-post-active {
+    color: #3DD0FF;
+}
+
+.text-report-active {
+    color: #FFBE36;
+}
+
+.text-recomment-active {
+    color: #E50158;
+}
+
+.post-active {
+    
+    border: 5px solid #3DD0FF;
+}
+
+.report-active {
+   
+    border: 5px solid #FFBE36;
+}
+
+.recomment-active {
+    
+    border: 5px solid #E50158;
+}
+

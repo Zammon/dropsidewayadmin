@@ -1,14 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Navbar from './Componenct/NavbarAdmin';
+import './CSS/MainEdit/MainApp.css'
+import Home from './Componenct/HomePage/Home';
+import ManagePost from './Componenct/ManagePostPage/ManagePost';
+import ManageUser from './Componenct/ManageUserPage/ManageUser';
+import ManageReport from './Componenct/ManageReport/ManageReport';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Navbar/>
+    <Home />
+    {/* <ManagePost /> */}
+    {/* <ManageUser /> */}
+    {/* <ManageReport /> */}
   </React.StrictMode>
 );
 

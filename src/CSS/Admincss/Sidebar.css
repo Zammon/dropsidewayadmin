@@ -5,20 +5,30 @@
     color: rgb(0, 0, 0);
 }
 
-:root {
-    --sitewidth: 100px;
-    --sitew: 100px;
+.main-relative {
+    position: relative;
+    width: auto;
+    height: auto;
 }
 
 /* Main Point */
-.container-menu {
+.area-slide {
     display: flex;
-    position: absolute;
-    width: 100%;
-    height: auto;
+    width: 277px;
+    min-height: auto;
+    height: 100%;
+    overflow: hidden;
+}
+
+.container-menu {
+    position:absolute;
     top: 0;
     bottom: 0;
-    /* background-color: coral; */
+    z-index: 999;
+    display: flex;
+    width: auto;
+    height: 100%;
+    background-color: rgba(255, 127, 80, 0.281);
     -webkit-user-select: none;
     white-space: nowrap;
     transition: ease 1000ms;
@@ -30,18 +40,43 @@
     min-width: 277px;
     height: 100vh;
     border-right: 1px solid #D9D9D9;
+    background-color: rgb(255, 255, 255);
     /* background-color: aqua; */
 }
 
-.menu-switch {
+.menu-switch-open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    z-index: 999;
     width: 50px;
     height: 50px;
     /* background-color: rgb(23, 147, 255); */
-    border-right: 2px solid #D9D9D9;
-    border-bottom: 2px solid #D9D9D9;
+    border-right: 1.8px solid #D9D9D9;
+    border-bottom: 1.8px solid #D9D9D9;
+    background-color: rgb(255, 255, 255);
+    transition: .4s all;
 }
 
-.menu-switch:hover {
+.menu-switch-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    z-index: 999;
+    width: 50px;
+    height: 50px;
+    /* background-color: rgb(23, 147, 255); */
+    /* border-right: 1.8px solid #D9D9D9;
+    border-bottom: 1.8px solid #D9D9D9; */
+    transition: 1.2s all;
+    background-color: #193B56;
+}
+
+.menu-switch-open:hover, .menu-switch-close:hover {
     cursor: pointer;
 }
 
@@ -152,4 +187,44 @@
     height: 50px;
     padding: 0 20px;
     background-color: #193B56;
+}
+
+/* Last Down */
+.bg-modal-open{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    transition: .5s all;
+    background-color: rgba(37, 37, 37, 0.521);
+}
+
+.bg-modal-close{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    width: auto;
+    height: 100%;
+    transition: .5s all;
+    background-color: rgba(37, 37, 37, 0);
+}
+
+.none-display {
+    display: none;
+}
+
+.bg-modal-transparent {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.bg-transparent {
+    width: auto;
+    height: 100%;
+    background-color: rgba(165, 42, 42, 0.144);
 }
