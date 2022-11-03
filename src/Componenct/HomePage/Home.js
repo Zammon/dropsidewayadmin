@@ -1,15 +1,11 @@
 import React from "react";
-import Slidebar from "../Tools/Slidebar";
-import Navbar from "../Tools/Navbar"
-import admins from "../../Model/Admins";
 import "../../CSS/Admincss/Home.css"
 
 function Home() {
     return(
        <>
-        <Slidebar />
-        <Navbar admin={admins}/>
         <div className="bg-color-main">
+            {/* Section First */}
             <div className="area-box-reports">
                 <div className="box-reports">
                     <div className="amount-reports post-active">
@@ -39,7 +35,10 @@ function Home() {
                     </div>
                 </div>
             </div>
-            
+            {/* Section Second*/}
+            <div className="area-title">
+                <div className="">Title box contron</div>
+            </div>
         </div>
        </>
     )

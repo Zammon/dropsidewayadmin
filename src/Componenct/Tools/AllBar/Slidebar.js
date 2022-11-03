@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from "react";
-import "../../CSS/Admincss/Sidebar.css"
+import "../../../CSS/Admincss/Sidebar.css"
 import { BsTextLeft } from "react-icons/bs";
-import Navbar from "./Navbar";
-
+import { Link } from 'react-router-dom';
 
 function Sidebar(props) {
     let [Slide,setSlide] = useState(-277);
     let [StatusSlide,setstatusSlide] = useState(false);
     let [styleSlide,setStyleSilde] = useState("bg-modal-close");
-    let [none,setNone] = useState("none-display");
 
     function ChangSlide(props) {
             if(props){
                 setSlide(0);
                 setstatusSlide(props);
                 setStyleSilde("bg-modal-open")
-                
-                console.log(props)
+                // console.log(props)
             } else {
                 setSlide(-277);
                 setstatusSlide(props);
                 setStyleSilde("bg-modal-close");
-                console.log(props)
+                // console.log(props)
             }
         }
 
@@ -43,30 +40,30 @@ function Sidebar(props) {
                             <div className="image-icon"></div>
                             <input className="inputs" placeholder="Search something is here"/>
                         </div>
-                        <div className="items-menu">
-                            <div className="image-icon"></div>
-                            <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Home</div>
-                        </div>
-                        <div className="items-menu">
-                            <div className="image-icon"></div>
-                            <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Manage Post</div>
-                        </div>
-                        <div className="items-menu">
-                            <div className="image-icon"></div>
-                            <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Manage User</div>
-                        </div>
-                        <div className="items-menu">
-                            <div className="image-icon"></div>
-                            <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Manage Report</div>
-                        </div>
-                        <div className="items-menu">
-                            <div className="image-icon"></div>
-                            <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Manage FAQ</div>
-                        </div>
-                        <div className="items-menu">
-                            <div className="image-icon"></div>
-                            <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Manage AD</div>
-                        </div>
+                            <div className="items-menu">
+                                <div className="image-icon"></div>
+                                <Link to="/">
+                                    <div className="text-item" onClick={()=>ChangSlide(false)}>Home</div>
+                                </Link>
+                            </div>
+                            <div className="items-menu">
+                                <div className="image-icon"></div> 
+                                <Link to="/managepost">
+                                    <div className="text-item" onClick={()=>ChangSlide(false)}>Manage Post</div>
+                                </Link>
+                            </div>
+                            <div className="items-menu">
+                                <div className="image-icon"></div>
+                                <Link to="/manageuser">
+                                    <div className="text-item" onClick={()=>ChangSlide(false)}>Manage User</div>
+                                </Link>
+                             </div>
+                            <div className="items-menu">
+                                <div className="image-icon"></div> 
+                                <Link to="/managereport">
+                                    <div className="text-item" onClick={()=>ChangSlide(false)}>Manage Report</div>
+                                </Link>
+                            </div>
                     </div>
                     {/* BOTTOM MENU */}
                     <div className="bottom-menu-admin">

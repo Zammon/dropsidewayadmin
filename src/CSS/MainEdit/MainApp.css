@@ -21,6 +21,76 @@
     background-color: #F6F6F6;
 }
 
+/* Box shadows all website */
+/* - - - - - - - - - - - - - - - - - */
 .box-shadow{
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* Box and Area Title/Description*/
+/* - - - - - - - - - - - - - - - - - */
+.area-title-manages {
+    width: 100%;
+    height: auto;
+    max-width: 1434px;
+    min-width: 720px;
+    min-height: 105px;
+    padding-left:16px;
+    margin-top: 31px;
+    /* margin-bottom: 44px; */
+    /* background-color: brown; */
+}
+
+.area-title-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    /* background-color: aquamarine; */
+}
+
+.area-description {
+    width: 100%;
+    height: auto;
+    color: #A7A7A7;
+    font-size: 16px;
+}
+
+.jus-description {
+    color: #A7A7A7;
+    font-size: 16px;
+}
+
+.manage-title-page {
+    min-width: 180px;
+    height: auto;
+    /* background-color: antiquewhite; */
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 180px;
+}
+
+/* Box and Area History */
+/* - - - - - - - - - - - - - - - - - */
+.area-history-latest {
+    width: 100%;
+    height: auto;
+    margin-left: 40px;
+    min-height: 163px;
+    max-width: 1460px;
+    min-width: 720px;
+    /* background-color: cadetblue; */
+}
+
+.area-box-history {
+    display: flex;
+    width: 100%;
+    height: auto;
+    padding-top: 10px;
+    min-height: 163px;
+    overflow: auto;
+}
+
+.none-display {
+    display: none;
 }

@@ -1,0 +1,29 @@
+.refresh-button {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: auto;
+    max-width: 100px;
+    height: 32px;
+    padding: 0 7px;
+    border: 1.5px solid #C9C9C9;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+}
+
+.area-icon-refresh {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    /* background-color: #c9c9c957; */
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.area-name-refresh {
+    font-size: 14px;
+    color: #C9C9C9;
+}
