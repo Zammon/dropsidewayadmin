@@ -1,0 +1,60 @@
+.detail-container {
+    background-color: #FFBE36;
+
+}
+
+.detail-container:hover {
+
+}
+
+.view-container-open {
+    background-color: #344553;
+}
+
+.view-container-open:hover{
+
+}
+
+.view-container-close {
+    background-color: transparent;
+    border: 2.5px solid #344553;
+}
+
+.view-container-close:hover {
+
+}
+
+.delete-container {
+    background-color: #FF5A5A;
+}
+
+.delete-container:hover {
+
+}
+
+.cancel-container {
+    background-color: transparent;
+    border: 2.5px solid #989898;
+}
+
+.cancel-container:hover {
+
+}
+
+.detail-container,.view-container-open,.view-container-close,.delete-container,.cancel-container {
+    cursor: pointer;
+}
+
+.detail-container:hover,.view-container-open:hover,.view-container-close:hover,.delete-container:hover,.cancel-container:hover {
+    filter: brightness(1.15);
+    transition: .5s all;
+}
+
+.short {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+}

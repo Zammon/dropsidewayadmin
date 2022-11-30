@@ -7,6 +7,7 @@ function Sidebar(props) {
     let [Slide,setSlide] = useState(-277);
     let [StatusSlide,setstatusSlide] = useState(false);
     let [styleSlide,setStyleSilde] = useState("bg-modal-close");
+    const [checkRankAdmin,setCheckRankAdmin] = useState(false);
 
     function ChangSlide(props) {
             if(props){
@@ -22,6 +23,13 @@ function Sidebar(props) {
             }
         }
 
+        useEffect(()=>{
+            if(props.admin.admin_rank.name_rank==='Admin Manager'){
+                setCheckRankAdmin(true);
+            } else {
+                setCheckRankAdmin(false);
+            }
+        },props.admin.admin_rank.name_rank)
 
     return(
         <div className="area-slide">  
@@ -42,25 +50,25 @@ function Sidebar(props) {
                         </div>
                             <div className="items-menu">
                                 <div className="image-icon"></div>
-                                <Link to="/">
+                                <Link className="setting-normal-router" to="/">
                                     <div className="text-item" onClick={()=>ChangSlide(false)}>Home</div>
                                 </Link>
                             </div>
                             <div className="items-menu">
                                 <div className="image-icon"></div> 
-                                <Link to="/managepost">
+                                <Link className="setting-normal-router" to="/managepost">
                                     <div className="text-item" onClick={()=>ChangSlide(false)}>Manage Post</div>
                                 </Link>
                             </div>
                             <div className="items-menu">
                                 <div className="image-icon"></div>
-                                <Link to="/manageuser">
+                                <Link className="setting-normal-router" to="/manageuser">
                                     <div className="text-item" onClick={()=>ChangSlide(false)}>Manage User</div>
                                 </Link>
                              </div>
                             <div className="items-menu">
-                                <div className="image-icon"></div> 
-                                <Link to="/managereport">
+                                <div className="image-icon"></div>
+                                <Link className="setting-normal-router" to="/managereport">
                                     <div className="text-item" onClick={()=>ChangSlide(false)}>Manage Report</div>
                                 </Link>
                             </div>
@@ -69,19 +77,26 @@ function Sidebar(props) {
                     <div className="bottom-menu-admin">
                         <div className="items-menu">
                             <div className="image-icon"></div>
-                            <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Profile Admin</div>
+                            <Link className="setting-normal-router" to="/profile">
+                               <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Profile Admin</div> 
+                            </Link>
                         </div>
+                        
+                        {checkRankAdmin ? <>
                         <div className="items-menu">
                             <div className="image-icon"></div>
-                            <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Manage Admin</div>
+                            <Link className="setting-normal-router" to="/manageadmin">
+                                <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Manage Admin</div>
+                            </Link>
                         </div>
+                        </>
+                        :''}
+                        
                         <div className="items-menu">
                             <div className="image-icon"></div>
-                            <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Register Admin</div>
-                        </div>
-                        <div className="items-menu">
-                            <div className="image-icon"></div>
-                            <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Log out</div>
+                            <Link className="setting-normal-router" to="/login">
+                                <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Log out</div>
+                            </Link>
                         </div>
                     </div>
                 </div>

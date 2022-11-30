@@ -8,14 +8,14 @@ function Navbar(props) {
     return(
         <>
             <div className="container-navbar" >
-                <div className="box-rank-admin">
-                    {admin[0].rank_admin}
+                <div className="box-rank-admin" style={{backgroundColor: admin.admin_rank.color_rank}}>
+                    {admin.admin_rank.name_rank}
                 </div>
                 <div className="box-name-admin">
-                    {admin[0].name}
+                    {admin.admin_name}
                 </div>
                 <div className="box-id-admin" >
-                    Admin ID : {admin[0].id_admin}
+                    Admin ID : {admin.admin_id}
                 </div>
             </div>
         </>

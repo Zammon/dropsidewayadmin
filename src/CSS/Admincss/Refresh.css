@@ -27,3 +27,11 @@
     font-size: 14px;
     color: #C9C9C9;
 }
+
+.refresh-button:hover {
+    border: 1.5px solid #b1b1b1;
+}
+
+.area-name-refresh:hover {
+    color: #b1b1b1;
+}

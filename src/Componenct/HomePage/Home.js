@@ -9,7 +9,7 @@ function Home() {
             <div className="area-box-reports">
                 <div className="box-reports">
                     <div className="amount-reports post-active">
-                       <text className="amount-numbers text-post-active">15</text> 
+                       <div className="amount-numbers text-post-active">15</div> 
                     </div>
                     <div className="area-text-reports">
                         <div className="title-text-reports ">Post active to day</div>
@@ -18,7 +18,7 @@ function Home() {
                 </div>
                 <div className="box-reports">
                     <div className="amount-reports report-active">
-                        <text className="amount-numbers text-report-active">9</text>
+                        <div className="amount-numbers text-report-active">9</div>
                     </div>
                     <div className="area-text-reports">
                         <div className="title-text-reports">Report active to day</div>
@@ -27,7 +27,7 @@ function Home() {
                 </div>
                 <div className="box-reports">
                     <div className="amount-reports recomment-active">
-                        <text className="amount-numbers text-recomment-active">11</text>
+                        <div className="amount-numbers text-recomment-active">11</div>
                     </div>
                     <div className="area-text-reports">
                         <div className="title-text-reports">Recomment by user</div>

@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+/* Component */
 import ManageSearch from "../Tools/AllInput/InputSearch";
 import BoxHistory from "../Tools/AllBoxandArea/BoxHistory";
 import RefreshBT from "../Tools/AllButton/RefreshButton";
-import '../../CSS/Admincss/ManageUser.css'
 import Boxitems from "../Tools/AllBoxandArea/Boxitems";
 import InputSort from "../Tools/AllInput/InputSort";
 import InputDropdown from "../Tools/AllInput/InputDropdown";
+import BoxNull from "../Tools/AllBoxandArea/BoxNull";
+
+/* CSS */
+import '../../CSS/Admincss/ManageUser.css'
+
+/* Model */
+import { manageuserPage } from '../../Model/settingPages'
+import {historyUsers, historyPosts} from "../../Model/History";
+import BoxitemHistory from "../Tools/AllBoxandArea/Boxitemhistory";
 
 function ManageUser() {
+    const [checkHistoryUser,setCheckHistoryUser] = useState();
+    const historymap = historyUsers.map((h,index)=>{
+        return(
+        <BoxHistory key={index} Object={h} />
+        );
+    })
+    
+    useEffect(()=>{
+        if(historyUsers.length === 0) {
+        setCheckHistoryUser(false)
+        console.log(false)
+        } else {
+        setCheckHistoryUser(true)
+        console.log(true)
+        }
+    },[])
+
     return(
         <>
         <div className="bg-color-main">
@@ -29,11 +55,8 @@ function ManageUser() {
                 <div className="area-description" style={{padding: "0 0 0 16px"}} >
                     History View Latest :
                 </div>
-                <div className="area-box-history">
-                    <BoxHistory />
-                    <BoxHistory />
-                    <BoxHistory />
-                    <BoxHistory />
+                <div className={`area-box-history${checkHistoryUser?'-not-null':'-null'}`}>
+                    {checkHistoryUser ? historymap : <BoxNull titles="There are no searches in your search history." />}
                 </div>
             </div>
             <div className="area-list-item-manageuser">
@@ -43,9 +66,9 @@ function ManageUser() {
                             Menu Manage Posts :
                         </div>
                         <div className="area-input-sort ">
-                            <InputDropdown Names="select type user"/>
-                            <InputDropdown Names="select type gender"/>
-                            <InputDropdown Names="select status user"/>
+                            <InputDropdown Ojects={manageuserPage[0]}/>
+                            <InputDropdown Ojects={manageuserPage[1]}/>
+                            <InputDropdown Ojects={manageuserPage[2]}/>
                             <RefreshBT />
                         </div>
                     </div>
@@ -75,12 +98,9 @@ function ManageUser() {
                             
                         </div>
                         <div className="area-items">
-                            <Boxitems />
-                            <Boxitems />
-                            <Boxitems />
-                            <Boxitems />
-                            <Boxitems />
-                            <Boxitems />
+                            <BoxitemHistory />
+                            <BoxitemHistory />
+                            <BoxitemHistory />
                         </div>
                     </div>
                 </div>

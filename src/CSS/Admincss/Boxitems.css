@@ -1,13 +1,33 @@
 .item-list {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
     width: 100%;
     /* height: auto; */
-    padding: 10px 5px;
+    padding: 10px 15px;
     min-height: 54px;
     background-color: rgb(255, 255, 255);
     margin: 12px 0;
     border-radius: 12px;
 }
 
+.area-button-crud {
+    width: 114px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 /* .item-list:first-child {
     margin-top: 0;
 } */
+
+.area-button-crud-history {
+    width: 72px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: aquamarine; */
+}

@@ -6,23 +6,37 @@ import InputSort from "./InputSort";
 function InputDropdown(props) {
     
     const [statusOpenDropdown,setStatusOpenDropdown] = useState(false);
-    const { Names, ItemsList } = props;
+    const [sendName,setSendName] = useState();
+    const { Ojects } = props;
     
+    const mapsOjects = Ojects.list_in_type.map((list,index)=>{
+        return ( 
+        <ItemDropdown key={index}>
+            {list.item}
+        </ItemDropdown>
+        )
+    });
+
     function opendropdownsort(props) {
         if(props) {
-            setStatusOpenDropdown(true)
+            setStatusOpenDropdown(props)
             console.log(props)
         } else {
-            setStatusOpenDropdown(false)
+            setStatusOpenDropdown(props)
             console.log(props)
         }
+    }
+
+    function changNameType(props){
+        setSendName(props)
+        console.log(props);
     }
 
     function ItemDropdown(props) {
         return(
             <>
                 <div className="inputDropdown-area-list">
-                    a
+                    {props.children}
                 </div>
             </>
         )
@@ -32,14 +46,14 @@ function InputDropdown(props) {
         <>
             <div className="inputDropdown-container">
                 <div className="inputDropdown-area-types" onClick={()=>{opendropdownsort(!statusOpenDropdown)}}>
-                    <InputSort NameInput={Names} />
+                    <InputSort nametypes={Ojects.name_type} />
                 </div>
-                {statusOpenDropdown ? <div className="inputDropdown-area-box">
-                        <ItemDropdown />
-                        <ItemDropdown />
-                        <ItemDropdown />
-                        <ItemDropdown />
-                    </div> : ""
+                {statusOpenDropdown ? 
+                    <div style={{minHeight: Ojects.minheight}} className="inputDropdown-area-box" >
+                        {mapsOjects}
+                    </div> 
+                    : 
+                    ""
                 }
             </div>
         </>
