@@ -9,31 +9,50 @@ import ManagePost from './Componenct/ManagePostPage/ManagePost';
 import ManageUser from './Componenct/ManageUserPage/ManageUser';
 import ManageReport from './Componenct/ManageReport/ManageReport';
 import Error404 from './Componenct/ErrorPage/Error404'
-import Login from './Componenct/AdminLogin/Loginpage';
 import AdminManage from './Componenct/AdminManages/AdminManage';
 
 import admins from './Model/Admins';
 import AdminProfile from './Componenct/AdminProfilePage/AdminProfilePage';
+import React,{ useEffect, useState } from 'react';
+import Loginpage from './Componenct/Login/Login';
 
 
 function App() {
-  return (
-    <>
-      <Slidebar admin={admins[0]} />
-      <Navbar admin={admins[0]}/>
-      <Routes>
-        {/* <Route path='*' element={<Error404 />} /> */}
-        <Route path="/" element={<Home />} />
-        <Route path='/managepost' element={<ManagePost />} />
-        <Route path='/manageuser' element={<ManageUser />} />
-        <Route path='/managereport' element={<ManageReport />} />
-        <Route path='/profile' element={<AdminProfile />} />
-        <Route path='/manageadmin' element={<AdminManage />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='*' element={<Error404 />}/>
-      </Routes>
-    </>
-  );
+  const [statusLogin,setStatusLogin] = useState(false);
+  const [showpage,setShowPage] = useState()
+  const [login, setLogin] = useState();
+  
+  useEffect(()=>{
+      if(statusLogin===false){
+        setShowPage(
+          <>
+            <Routes>
+              <Route path='/' element={<Loginpage login={setLogin} status={setStatusLogin}/>} />
+            </Routes>
+          </>
+        )} else {
+          setShowPage(
+            <>
+              <Slidebar admin={login && login} status={setStatusLogin}/>
+              <Navbar admin={login && login}/>
+              <Routes>
+                {/* <Route path='*' element={<Error404 />} /> */}
+                <Route path="/" element={<Home />} />
+                <Route path='/managepost' element={<ManagePost />} />
+                <Route path='/createpost' element={<ManageUser admin={login && login}/>} />
+                <Route path='/managereport' element={<ManageReport />} />
+                <Route path='/profile' element={<AdminProfile admin={login && login}/>} />
+                <Route path='/manageadmin' element={<AdminManage admin={login && login}/>} />
+                <Route path='*' element={<Error404 />}/>
+              </Routes>
+            </>
+          )
+        }
+      },[statusLogin]);
+  
+  
+
+  return showpage;
 }
 
 export default App;

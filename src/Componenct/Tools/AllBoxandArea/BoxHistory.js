@@ -5,15 +5,15 @@ function BoxHistory(props) {
     const { Object } = props;
     const [boxhistorys,setBoxhistorys] = useState();
     
-    useEffect(()=>{
-        if(Object.typePage === 1) {
-            setBoxhistorys(<UserPage />);
-            console.log(Object.typePage)
-        }else if (Object.typePage === 2) {
-            setBoxhistorys(<PostPage />);
-            console.log(Object.typePage)
-        }
-    },[])
+    // useEffect(()=>{
+    //     if(Object.typePage === 1) {
+    //         setBoxhistorys(<UserPage />);
+    //         console.log(Object.typePage)
+    //     }else if (Object.typePage === 2) {
+    //         setBoxhistorys(<PostPage />);
+    //         console.log(Object.typePage)
+    //     }
+    // },[])
 
     function UserPage() {
         return(

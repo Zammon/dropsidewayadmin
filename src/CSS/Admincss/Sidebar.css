@@ -103,6 +103,11 @@
     font-size: 13px;
 }
 
+.text-name {
+    font-size: 15px!important;
+    font-weight: bold!important;
+}
+
 .text-item:hover {
     cursor: pointer;
 }
@@ -147,11 +152,29 @@
 }
 
 .image-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
     width: 26px;
     height: 26px;
     border-radius: 50%;
     margin-right: 16px;
     background-color: #193B56;
+}
+
+.search {
+    background-color: #7c7c7c!important;
+}
+
+.logout-area {
+    padding-left: 3px;
+    background-color: #E50158!important;
+}
+
+.logout-text {
+    color: #E50158!important;
+    font-weight: bold;
 }
 
 /* Bottom Menu Item */

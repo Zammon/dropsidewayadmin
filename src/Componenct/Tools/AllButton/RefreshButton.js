@@ -2,7 +2,7 @@ import React from "react";
 import '../../../CSS/Admincss/Refresh.css'
 import { BsArrowClockwise } from 'react-icons/bs'
 
-function RefreshBT() {
+function RefreshBT(props) {
 return(
     <>
         <div className="refresh-button">

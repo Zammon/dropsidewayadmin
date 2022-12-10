@@ -27,6 +27,14 @@
     border-radius: 6px;
 }
 
+.superadmin{
+    background-color: #E50158;
+}
+
+.admin{
+    background-color: #FF740F;
+}
+
 .box-name-admin {
     font-weight: bold;
     margin-left: 20px;

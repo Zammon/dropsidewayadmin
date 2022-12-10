@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "../../../CSS/Admincss/Sidebar.css"
 import { BsTextLeft } from "react-icons/bs";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AiFillHome } from 'react-icons/ai'
+import { FaUserCircle } from 'react-icons/fa'
+import { BiSearch, BiMessageSquareEdit } from 'react-icons/bi'
+import { BsFillFilePostFill } from 'react-icons/bs'
+import { MdLogout, MdAdminPanelSettings} from 'react-icons/md'
+import Loginpage from "../../Login/Login";
 
 function Sidebar(props) {
+    const { admin ,status } = props;
     let [Slide,setSlide] = useState(-277);
     let [StatusSlide,setstatusSlide] = useState(false);
     let [styleSlide,setStyleSilde] = useState("bg-modal-close");
     const [checkRankAdmin,setCheckRankAdmin] = useState(false);
-
+    const navigate = useNavigate()
     function ChangSlide(props) {
             if(props){
                 setSlide(0);
@@ -24,12 +31,16 @@ function Sidebar(props) {
         }
 
         useEffect(()=>{
-            if(props.admin.admin_rank.name_rank==='Admin Manager'){
+            if(admin.data.type==='Super Admin'){
                 setCheckRankAdmin(true);
             } else {
                 setCheckRankAdmin(false);
             }
-        },props.admin.admin_rank.name_rank)
+        },[admin])
+
+        function calllogin() {
+            status(false);
+        }
 
     return(
         <div className="area-slide">  
@@ -45,57 +56,73 @@ function Sidebar(props) {
                     {/* TOP MENU */}
                     <div className="top-menu-admin">
                         <div className="search-admin">
-                            <div className="image-icon"></div>
+                            <div className="image-icon">
+                                <BiSearch fill="#ffffff" />
+                            </div>
                             <input className="inputs" placeholder="Search something is here"/>
                         </div>
                             <div className="items-menu">
-                                <div className="image-icon"></div>
-                                <Link className="setting-normal-router" to="/">
-                                    <div className="text-item" onClick={()=>ChangSlide(false)}>Home</div>
+                                <div className="image-icon">
+                                    <AiFillHome fill="#ffffff"/>
+                                </div>
+                                <Link className="setting-normal-router" to="/" onClick={()=>ChangSlide(false)}>
+                                    <div className="text-item">Home</div>
                                 </Link>
                             </div>
                             <div className="items-menu">
-                                <div className="image-icon"></div> 
-                                <Link className="setting-normal-router" to="/managepost">
-                                    <div className="text-item" onClick={()=>ChangSlide(false)}>Manage Post</div>
+                                <div className="image-icon">
+                                    <BsFillFilePostFill size="16px" fill="#ffffff" />  
+                                </div>
+                                    <Link className="setting-normal-router" to="/createpost" onClick={()=>ChangSlide(false)}>
+                                        <div className="text-item">Create Post</div>
+                                    </Link>
+                            </div>
+
+                            <div className="items-menu">
+                                <div className="image-icon">
+                                    <BiMessageSquareEdit size="18px" fill="#ffffff" />
+                                </div> 
+                                <Link className="setting-normal-router" to="/managepost" onClick={()=>ChangSlide(false)}>
+                                    <div className="text-item">Manage Post</div>
                                 </Link>
                             </div>
-                            <div className="items-menu">
+                           
+                            {/* <div className="items-menu">
                                 <div className="image-icon"></div>
-                                <Link className="setting-normal-router" to="/manageuser">
-                                    <div className="text-item" onClick={()=>ChangSlide(false)}>Manage User</div>
+                                <Link className="setting-normal-router" to="/managereport" onClick={()=>ChangSlide(false)}>
+                                    <div className="text-item">Manage Report</div>
                                 </Link>
-                             </div>
-                            <div className="items-menu">
-                                <div className="image-icon"></div>
-                                <Link className="setting-normal-router" to="/managereport">
-                                    <div className="text-item" onClick={()=>ChangSlide(false)}>Manage Report</div>
-                                </Link>
-                            </div>
+                            </div> */}
                     </div>
                     {/* BOTTOM MENU */}
                     <div className="bottom-menu-admin">
                         <div className="items-menu">
-                            <div className="image-icon"></div>
-                            <Link className="setting-normal-router" to="/profile">
-                               <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Profile Admin</div> 
+                            <div className="image-icon">
+                                <img className="images-full" src={admin.data.profile}/>
+                            </div>
+                            <Link className="setting-normal-router" to="/profile" onClick={()=>ChangSlide(false)}>
+                               <div className="text-item text-name">{`${admin.data.firstname} ${admin.data.lastname}`}</div> 
                             </Link>
                         </div>
                         
                         {checkRankAdmin ? <>
                         <div className="items-menu">
-                            <div className="image-icon"></div>
-                            <Link className="setting-normal-router" to="/manageadmin">
-                                <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Manage Admin</div>
+                            <div className="image-icon">
+                                <MdAdminPanelSettings fill="#ffff" />
+                            </div>
+                            <Link className="setting-normal-router" to="/manageadmin" onClick={()=>ChangSlide(false)}>
+                                <div className="text-item">Manage Admin</div>
                             </Link>
                         </div>
                         </>
-                        :''}
+                        :""}
                         
                         <div className="items-menu">
-                            <div className="image-icon"></div>
-                            <Link className="setting-normal-router" to="/login">
-                                <div className="text-item" onMouseDown={()=>ChangSlide(false)}>Log out</div>
+                            <div className="image-icon logout-area">
+                                <MdLogout fill="#ffffff"/>
+                            </div>
+                            <Link className="setting-normal-router" to="/" onClick={calllogin}>
+                                <div className="text-item logout-text" onClick={()=>{ChangSlide(false)}}>Log out</div>
                             </Link>
                         </div>
                     </div>

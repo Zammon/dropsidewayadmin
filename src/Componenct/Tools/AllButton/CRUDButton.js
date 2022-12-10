@@ -15,6 +15,8 @@ function DetailButton(props) {
 }
 
 function ViewButton(props) {
+    const { admin } = props;
+
     const [statusView,setStatusView] = useState(true);
 
     function changstatusView() {

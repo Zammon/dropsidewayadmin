@@ -15,49 +15,41 @@ import '../../CSS/Admincss/ManageUser.css'
 import { managepostPage } from '../../Model/settingPages'
 import { historyUsers, historyPosts } from "../../Model/History";
 import BoxitemHistory from "../Tools/AllBoxandArea/Boxitemhistory";
+import axios from "axios";
 
 
 function ManagePost(){ 
-    const [checkHistoryPost,setCheckHistoryPost] = useState();
-    const historymap = historyPosts.map((h,index)=>{
-        return(
-        <BoxHistory key={index} Object={h} />
-        );
-    })
+    /* api:get */
+    const [ListPost,setListPost] = useState();
+    const listpost = async ()=> {
+        const data = await axios.get("https://localhost:7228/api/HomeAdmin/get/GetListPost");
+        setListPost(data);
+    }
 
     useEffect(()=>{
-        if(historyUsers.length === 0) {
-            setCheckHistoryPost(false)
-        console.log(false)
-        } else {
-            setCheckHistoryPost(true)
-        console.log(true)
-        }
+        listpost();
     },[])
+
+    /* map + component */
+    const mapListPost = ListPost && ListPost.data.map((data,index)=>{
+        return <Boxitems key={index} List={data&&data}/>
+    });
 
     return(
         <>
         <div className="bg-color-main">
             {/* MANAGE POST ADMINS PAGE  */}
             <div className="area-title-manages">
-                {/* top area */}
+            {/* top area */}
                 <div className="area-title-top">
                     <div className="manage-title-page">
                         Manage Posts
                     </div>
                     <ManageSearch />
                 </div>
-                {/* bottom area */}
+            {/* bottom area */}
                 <div className="area-description">
                 This page is for managing user accout on the website.
-                </div>
-            </div>
-            <div className="area-history-latest">
-                <div className="area-description" style={{padding: "0 0 0 16px"}} >
-                    History View Latest :
-                </div>
-                <div className={`area-box-history${checkHistoryPost?'-not-null':'-null'}`}>
-                    {checkHistoryPost ? historymap : <BoxNull titles="There are no searches in your search history." />}
                 </div>
             </div>
             <div className="area-list-item-manageuser">
@@ -75,19 +67,22 @@ function ManagePost(){
                     </div>
                     <div className="box-list-left">
                         <div className="area-title-name">
-                            
+                            <div className="area-image-item-managepost">ImageItem</div>
+                            <div className="area-title-post-managepost">Title Post</div>
+                            <div className="area-type-post-managepost">Type Post</div>
+                            <div className="area-category-item-managepost">CategoryItem</div>
+                            <div className="area-tag-managepost">Tag</div>
+                            <div className="area-lost-or-meet-managepost">Area</div>
+                            <div className="area-post-by-managepost">Posted by</div>
+                            <div className="area-post-date-time-managepost">Posted Date and Time</div>
+                            <div className="area-button-crud-managepost"></div>
                         </div>
                         <div className="area-items">
-                            <Boxitems />
-                            <Boxitems />
-                            <Boxitems />
-                            <Boxitems />
-                            <Boxitems />
-                            <Boxitems />
+                            {mapListPost}
                         </div>
                     </div>
                 </div>
-                <div className="area-list-right">
+                {/* <div className="area-list-right">
                     <div className="area-input-filter-right">
                         <div className="jus-description">
                             History Manage Posts :
@@ -105,7 +100,7 @@ function ManagePost(){
                             <BoxitemHistory />
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
         </>

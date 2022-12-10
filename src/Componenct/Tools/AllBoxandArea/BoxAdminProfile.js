@@ -1,20 +1,30 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import '../../../CSS/Admincss/BoxAdminProfile.css'
 
 import admin from "../../../Model/Admins";
 
 
-function BoxProfile() {
+function BoxProfile(props) {
+    const { data } = props;
+    const [statusRank, setStatusRank] = useState();
+    useEffect(()=>{
+        if(data.data.type==="Super Admin"){
+            setStatusRank(true);
+        }else{
+            setStatusRank(false)
+        }
+    },[])
+
     return(
         <>
                 <div className="area-profile box-shadow">
                     <div className="area-img-profile">
-                        <img className="img-full-frame" src={admin[0].admin_profile} />
+                        <img className="img-full-frame" src={data.data.profile} />
                     </div>
                     <div className="area-bio">
                         <div className="area-admin-name">
-                            <div className="admin-name">{admin[0].admin_name}</div>
-                            <div className="admin-id">#{admin[0].admin_id}</div>
+                            <div className="admin-name">{`${data.data.firstname} ${data.data.lastname}`}</div>
+                            <div className="admin-id">#{data.data.idAccout}</div>
                         </div>
                         <div className="area-admin-bio">
                             <div className="area-admin-col">
@@ -35,7 +45,7 @@ function BoxProfile() {
                             </div>
                             <div className="area-admin-col">
                                 <div className="area-admin-row">
-                                    ID Card Number: {admin[0].admin_id}
+                                    ID Card Number: {data.data.idAccout}
                                 </div>
                                 <div className="area-admin-row">
                                     Address: {admin[0].admin_address}
@@ -43,8 +53,8 @@ function BoxProfile() {
                             </div>
                         </div>
                         <div className="area-admin-rank">
-                            <div className="box-admin-rank" style={{backgroundColor: admin[0].admin_rank.color_rank}}>
-                                {admin[0].admin_rank.name_rank}
+                            <div className={`box-admin-rank ${statusRank ? "superadmin":"admin"}`}>
+                                {data.data.type}
                             </div>
                         </div>  
                     </div>
