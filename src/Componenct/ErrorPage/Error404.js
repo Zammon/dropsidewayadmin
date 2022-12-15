@@ -1,17 +1,13 @@
+//React import
 import React from "react";
+///Css import
+import './Error404.css'
 
 function Error404() {
     return(
     <>
-        <div className="bg-color-main">
-            <div className="">
-                 <div className="">
+        <div className="container-mains">
                     Error 404 : ...
-                 </div>
-                 <div className="">
-
-                 </div>
-            </div>
         </div>
     </>
     );

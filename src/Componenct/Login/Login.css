@@ -1,0 +1,122 @@
+/* Area All In The Loginpage */
+.container-loginpage {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lavender;
+}
+/* Set Width = 100% : Label, Input, Button */
+.label-loginpage, .input-loginpage, .button-loginpage {
+    width: 100%;
+}
+
+/*Set Label, Input, Button*/
+/* Label */
+.label-loginpage {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+/* Input */
+.input-loginpage {
+    background-color: #F2F2F2;
+    border: 1px solid #9A9A9A;
+    padding: 0 8px;
+    height: 40px;
+    outline: none;
+    border-radius: 6px;
+
+    margin-bottom: 33px;
+}
+/* Button */
+.button-loginpage {
+    height: 50px;
+    font-size: 17px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    background-color: #FFBE36;
+    border: none;
+    border-radius: 6px;
+    margin-top: 13px;
+}
+
+.button-loginpage:hover {
+    filter: brightness(1.1);
+    transition: all .5s ease;
+    cursor: pointer;
+}
+
+/* Alert! username, password */
+.alert-loginpage {
+    position:absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F1F1F1;
+    top: 55px;
+    z-index: 9999;
+    height: 50px;
+    width: auto;
+    padding: 0 20px;
+    border-radius: 6px;
+    background-color: #ff3535;
+}
+
+/* Box Login */
+.area-loginpage {
+    position: relative;
+    z-index: 999;
+    width: 492px;
+    height: 492px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 47px 0 0 0;
+}
+
+/* Title Box */
+.title-loginpage {
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    width: 100%;
+    height: auto;
+    margin-bottom: 14px;
+
+}
+
+/* Change Color title */
+.title-text-loginpage{
+    color: #FFBE36;
+    margin-left: 6px;
+}
+
+.details-loginpage {
+    color: #898989;
+    margin-bottom: 47px;
+}
+
+/* Area Get Input */
+.area-input-loginpage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 305px;
+    height: 247px;
+    /* background-color: aqua; */
+}
+
+/* Background in Login page */
+.bg-image-loginpage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(7px);
+}
