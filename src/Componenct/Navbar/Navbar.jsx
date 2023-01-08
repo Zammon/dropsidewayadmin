@@ -6,22 +6,38 @@ import './Navbar.css'
 import { Link } from "react-router-dom";
 //Axios import
 import axios from "axios";
+//Service API import
+import { Accoutapi } from "../../Service/RequestAPI.service";
 
 //Component import
 import MenuInNavbar from "../MenuInNavbar/MenuInNavbar";
 
 export default function Navbar(props) {
     const [accout, setaccout] = useState();
+    const [statusadmin, setStatusAdmin] = useState(null);
 
     const Accouts = async () =>{
-      const data = await axios.get("https://localhost:7228/api/HomeAdmin/login/AdminLogin?accoutname=staff01&password=123456")
+      const data = await axios.post("https://localhost:7113/api/DropsidewayAdmin/Login",
+      {
+        "accout": "test",
+        "password": "test"
+      }
+      )
       setaccout(data);
-      console.log(`Data: ${data} and app.js runing`)
     }
     
     useEffect(()=>{
         Accouts();
+        
     },[])
+
+    useEffect(()=>{
+        if(accout&&accout.data.type === "Super Admin"){
+            setStatusAdmin(true);
+          } else if(accout&&accout.data.type === "Admin") {
+             setStatusAdmin(false);
+          }
+    },[accout&&accout.data.type])
 
     return(
         <div className="container-main">
@@ -30,9 +46,9 @@ export default function Navbar(props) {
                     DropSideWay Admin Management
                 </div>
                 <div className="area-menu-top-navbar">
-                    <MenuInNavbar menu="Home" link="/" status={true} />
-                    <MenuInNavbar menu="Create Post" link="/createpost" status={true}/>
-                    <MenuInNavbar menu="Manage Post" link="/managepost" icon="" status={true}/>
+                    <MenuInNavbar menu="หน้าหลัก" link="/" status={true} />
+                    <MenuInNavbar menu="สร้างโพส" link="/createpost" status={true}/>
+                    <MenuInNavbar menu="จัดการโพส" link="/managepost" icon="" status={true}/>
                 </div>
                 <div className="area-menu-bottom-navbar">
                     <div className="area-menu-bottom">
@@ -46,14 +62,14 @@ export default function Navbar(props) {
                                 </div>
                             </Link>
                         </div>
-                        <MenuInNavbar menu="Manage Admin" link="/manageadmin" status={true} />
-                        <MenuInNavbar menu="Logout" link="/login" /> 
+                        <MenuInNavbar menu="จัดการผู้ใช้" link="/manageadmin" status={true} />
+                        <MenuInNavbar menu="ออกจากระบบ" link="/login" /> 
                     </div>
                 </div>
             </div>
-            <div className="container-content">
+            <div style={{height: `${window.innerHeight-50}px!important`}} className="container-content">
                 <div className="area-navbar-navbar">
-                    <div className="area-rank-admin-navbar">
+                    <div className={`area-rank-admin-navbar default-admin-color-navbar ${statusadmin ? "superadmin-color-navbar":"admin-color-navbar"}`}>
                         {`${accout && accout.data.type}`}
                     </div>
                     <div className="area-name-admin-navbar">

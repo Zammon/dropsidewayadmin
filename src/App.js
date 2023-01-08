@@ -1,5 +1,5 @@
 //React import
-import React,{ useEffect, useState } from 'react';
+import React,{ useEffect, useState, useContext } from 'react';
 // CSS Import
 import './App.css'
 // React Router Dom
@@ -16,11 +16,13 @@ import AdminProfile from './Componenct/ProfileAdmin/ProfileAdmin';
 import Error404 from './Componenct/ErrorPage/Error404'
 import Navbar from './Componenct/Navbar/Navbar';
 import Login from './Componenct/Login/Login';
+import SelectContextProvider from './Componenct/UseContexts/SelectContext';
 
 function App() {
 
       return(
         <>
+        <SelectContextProvider>
           <Navbar>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -32,6 +34,7 @@ function App() {
               <Route path='*' element={<Error404 />}/>
             </Routes>
           </Navbar>
+        </SelectContextProvider>
         </>
       )
 

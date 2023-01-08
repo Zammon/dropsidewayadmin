@@ -1,5 +1,6 @@
 //React import
 import React from "react";
+import NavProfile from "../NavProfile/NavProfile";
 //CSS import
 import './ManageAdmin.css'
 
@@ -11,7 +12,7 @@ function ManageAdmin(props) {
     return(
         <> 
             <div className="container-page">
-                AdminManage
+                <NavProfile />
             </div>
         </>
     )

@@ -1,0 +1,122 @@
+.container-navprofile {
+    width: 100%;
+    height: 186px;
+    min-height: 186px;
+    /* background-color: aqua!important; */
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid #D9D9D9;
+    padding: 29px 124px;
+}
+
+.content-navprofile {
+    display: flex;
+    width: auto;
+    min-width: 621px;
+    height: 100%;
+    /* background-color: rgb(255, 233, 203); */
+}
+
+.profile-navprofile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: rgb(246, 251, 255);
+    outline: 2px solid #d6d6d6;
+    margin-right: 40px;
+}
+
+.contect-item-navprofile {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: 100%;
+}
+
+.content-top-navprofile {
+    display: flex;
+    align-items: flex-start;
+    font-size: 27px;
+    font-weight: bold;
+    min-height: 32px;
+    height: auto;
+    width: 100%;
+    margin-bottom: 5px;
+    /* background-color: cadetblue; */
+}
+
+/* .content-top-navprofile div {
+    display: flex;
+    align-items: flex-end;
+    width: auto;
+    height: 100%;
+    color: #888888;
+    font-size: 20px;
+    padding-bottom: 2px;
+    margin-left: 10px;
+    background-color: #E50158;
+} */
+
+.item-bio-navprofile div:nth-child(1) {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 5px;
+    /* background-color: #FF740F; */
+}
+
+.item-bio-navprofile div:nth-child(2) {
+    width: 100%;
+    height: 30px;
+    /* background-color: #83ff0f; */
+}
+
+.item-bio-navprofile {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    min-width: 262px;
+    height: auto;
+    font-size: 16px;
+    /* background-color: aqua; */
+}
+
+.content-bottom-navprofile {
+    display: flex;
+    height: auto;
+    width: 100%;
+    margin-top: 8px;
+    color: #5f5f5f;
+    /* background-color: rgb(118, 237, 241); */
+}
+
+/* .content-bottom-navprofile {
+    display: flex;
+    height: 34px;
+    width: 100%;
+    background-color: rgb(112, 95, 160);
+} */
+
+.area-type-admin-navprofile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 34px;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 14.5px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-left: 10px;
+}
+
+.admin-color-navprofile {
+    background-color: #FF740F;
+}
+
+.superadmin-color-navprofile {
+    background-color: #E50158;
+}
