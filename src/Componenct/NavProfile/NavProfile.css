@@ -21,6 +21,7 @@
     justify-content: center;
     align-items: center;
     width: 128px;
+    min-width: 128px;
     height: 128px;
     border-radius: 50%;
     overflow: hidden;
@@ -111,12 +112,4 @@
     font-weight: bold;
     color: #ffffff;
     margin-left: 10px;
-}
-
-.admin-color-navprofile {
-    background-color: #FF740F;
-}
-
-.superadmin-color-navprofile {
-    background-color: #E50158;
 }

@@ -1,22 +1,17 @@
-// React import
 import React, { useContext, useEffect, useRef, useState } from "react";
-//CSS import
 import './CreatePost.css'
-//Axois import
 import axios from "axios";
 import { ImCross } from "react-icons/im"
 import { BsPlusSquareFill } from "react-icons/bs"
-// Component
 import { SelectsContext } from "../UseContexts/SelectContext";
 import { Typepostapi } from "../../Service/RequestAPI.service";
 
 function CreatePost(props) {
   // Disassemble of Props
-  const { admin } = props;
+  const userID = localStorage.getItem('userId')
   const { selectTypeArea, selectTypeCategory, selectTypeTags } = useContext(SelectsContext);
 
   // useState: Data New Post
-  const [IdAccout, setIdAccout] = useState("");
   const [Type, setType] = useState("ตามหาของหาย");
   const [Title, setTitle] = useState("");
   const [Directory, setDirectory] = useState("");
@@ -38,33 +33,31 @@ function CreatePost(props) {
   //useRef: Input Type File images
   const inputImagesRef = useRef();
 
-  useEffect(() => {
-    console.log(`iaaccout: ${IdAccout && IdAccout.data.idAccout}`);
-    console.log(`type: ${Type}`);
-    console.log(`title: ${Title}`);
-    console.log(`directory: ${Directory}`);
-    console.log(`category item: ${CategoryItem}`);
-    console.log(`tag: ${Tag}`);
-    console.log(`area: ${Area}`);
-    console.log(`diretory area lost: ${DirectoryArealost}`);
-    console.log("-------------------------------");
-    Images.map((e, i) => {
-      console.log(e);
-    });
-    console.log("-------------------------------");
-    console.log(`firstname: ${firstname}`);
-    console.log(`lastname: ${lastname}`);
-    console.log(`nickname: ${nickname}`);
-    console.log(`studentID: ${studentid}`);
-    console.log(`type: ${typeperson}`);
-    console.log(`tel.: ${tels}`);
-    console.log(`email: ${email}`);
-    console.log("*********************************");
-  }, [IdAccout,Type,Title,Directory
-    ,CategoryItem,Tag,Area,DirectoryArealost
-    ,Images,firstname,lastname,nickname
-    ,studentid,typeperson,tels,email
-  ]);
+  // useEffect(() => {
+  //   console.log(`type: ${Type}`);
+  //   console.log(`title: ${Title}`);
+  //   console.log(`directory: ${Directory}`);
+  //   console.log(`category item: ${CategoryItem}`);
+  //   console.log(`tag: ${Tag}`);
+  //   console.log(`area: ${Area}`);
+  //   console.log(`diretory area lost: ${DirectoryArealost}`);
+  //   console.log("-------------------------------");
+  //   Images.map((e, i) => {
+  //     console.log(e);
+  //   });
+  //   console.log("-------------------------------");
+  //   console.log(`firstname: ${firstname}`);
+  //   console.log(`lastname: ${lastname}`);
+  //   console.log(`nickname: ${nickname}`);
+  //   console.log(`studentID: ${studentid}`);
+  //   console.log(`type: ${typeperson}`);
+  //   console.log(`tel.: ${tels}`);
+  //   console.log(`email: ${email}`);
+  //   console.log("*********************************");
+  // }, 
+  // [
+  //   Type,Title,Directory,CategoryItem,Tag,Area,DirectoryArealost,Images,firstname,lastname,nickname,studentid,typeperson,tels,email
+  // ]);
   
   const [typeReport, setTypeReport] = useState(true);
   
@@ -122,7 +115,7 @@ function CreatePost(props) {
   const createNewPost = async (e) => {
     e.preventDefault();
     const bodyFormData = new FormData();
-    bodyFormData.append("IdAccout", IdAccout.data.idAccout);
+    bodyFormData.append("IdAccout", userID);
     bodyFormData.append("Type", Type);
     bodyFormData.append("Title", Title);
     bodyFormData.append("Directory", Directory);
@@ -130,7 +123,6 @@ function CreatePost(props) {
     bodyFormData.append("Tag", Tag);
     bodyFormData.append("Area", Area);
     bodyFormData.append("DirectoryArealost", DirectoryArealost);
-    
     bodyFormData.append("FirstName", firstname);
     bodyFormData.append("LastName", lastname);
     bodyFormData.append("NickName", nickname);
@@ -143,7 +135,7 @@ function CreatePost(props) {
       bodyFormData.append("NameImage", Img);
     });
     await axios
-      .post("https://localhost:7228/api/HomeAdmin/create/Posts", bodyFormData)
+      .post("https://localhost:7113/api/DropsidewayAdmin/CreatePosts", bodyFormData)
       .then((result) => {
         if (result.data === "Complete") {
           // inputTypePostRef.current.click();
@@ -164,7 +156,6 @@ function CreatePost(props) {
       });
   };
 
-  // ***Return this page***
   return (
     <>
       <div className="container-page">

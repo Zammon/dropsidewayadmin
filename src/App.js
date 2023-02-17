@@ -1,9 +1,6 @@
-//React import
 import React,{ useEffect, useState, useContext } from 'react';
-// CSS Import
 import './App.css'
-// React Router Dom
-import {Route, Routes} from 'react-router-dom';
+import { Route,Routes, useNavigate } from 'react-router-dom';
 //Axios import
 import axios from "axios";
 
@@ -17,8 +14,18 @@ import Error404 from './Componenct/ErrorPage/Error404'
 import Navbar from './Componenct/Navbar/Navbar';
 import Login from './Componenct/Login/Login';
 import SelectContextProvider from './Componenct/UseContexts/SelectContext';
+import { AuthContext } from './Componenct/UseContexts/AuthContext';
+
 
 function App() {
+      const { statusAuth } = useContext(AuthContext);
+
+      if(statusAuth) return (
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path='*' element={<Error404 />}/>
+      </Routes>
+      )
 
       return(
         <>

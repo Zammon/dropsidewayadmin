@@ -5,15 +5,14 @@ import { HiEye, HiEyeOff} from 'react-icons/hi'
 import { AiFillDelete, AiOutlineFileSearch } from 'react-icons/ai'
 import axios from "axios";
 
-function Editbutton(props) {
-    const { idpost, status } = props;
+function Editbutton({id, status}) {
     const [statuspost, setStatusPost] = useState("");
     const [openview, setOpenview] = useState(true);
     
     const EditStatus = async(e)=>{
         const data = await axios.patch("https://localhost:7113/api/DropsidewayAdmin/Changestatus",
         {
-            "idPost" : idpost,
+            "idPost" : id,
             "statuspost" : e
         }
         ).then(result=>console.log(result))
@@ -34,7 +33,6 @@ function Editbutton(props) {
     
     useEffect(()=>{
         setStatusPost(status);
-        console.log(status);
     },[status])
 
     useEffect(()=>{
@@ -59,31 +57,29 @@ function Editbutton(props) {
     )
 }
 
-function Deletebutton(props) {
-    const { idpost, statusDel } = props;
-
+function Deletebutton({id, status}) {
     const [checkdelete ,setCheckDelete] = useState(false);    
     
     const DeleteStatus = async ()=>{
         const data = await axios.patch("https://localhost:7113/api/DropsidewayAdmin/Changestatus",
         {
-            "idPost": idpost,
+            "idPost": id,
             "statuspost": "0"
         }
         ).then(result=>console.log(result))
         .catch(error=>console.log(error));
         setCheckDelete(false);
-        statusDel();
+        status();
     };
 
-    const ModelDelete = () => {
+    const ModelDelete = ({title, description}) => {
         return (
         <div className={`${checkdelete?"area-modal-delete-open-itemfilterbutton":"area-modal-delete-close-itemfilterbutton"}`} >
             <div className="area-modal-title-itemfilterbutton">
-                Are you sure to Delete?
+                {`คุณต้องการที่จะลบ${title}?`}
             </div>
             <div className="area-modal-description-itemfilterbutton">
-                Description
+                {description}
             </div>
             <div className="area-modal-button-itemfilterbutton">
                 <button onClick={()=>{setCheckDelete(false)}}>CLOSE</button>
@@ -99,7 +95,7 @@ function Deletebutton(props) {
     return(
         <>
             <div className={`${checkdelete?"modal-delete-open-itemfilterbutton":"modal-delete-close-itemfilterbutton"}`}>
-                <ModelDelete />
+                <ModelDelete title="บัญชีผู้ใช้"/>
                 <div className="modal-backgroup" onClick={()=>{setCheckDelete(false)}}></div>
             </div>
 
@@ -112,9 +108,7 @@ function Deletebutton(props) {
     )
 }
 
-function Detailbutton(props) {
-    const { idpost } = props;
-
+function Detailbutton({id, status}) {
     return(
         <>
             <Link to="">
@@ -128,4 +122,4 @@ function Detailbutton(props) {
     )
 }
 
-export {Editbutton, Deletebutton, Detailbutton};
+export {Editbutton, Deletebutton, Detailbutton };

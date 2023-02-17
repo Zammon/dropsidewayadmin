@@ -4,7 +4,6 @@
     height: 50px;
     margin-top: 31px;
     /* background-color: rgb(87, 87, 255); */
-    padding-left: 84px;
 }
 
 .content-top-title-createpost {
@@ -47,6 +46,8 @@
     font-size: 14.5px;
     border-radius: 5px;
     padding-left: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border: 1px solid #BDBDBD;
     background-color: #F9F9F9;
 }
@@ -406,7 +407,6 @@ select:focus {
     height: auto;
     /* background-color: darkviolet; */
     margin-top: 21px;
-    padding-left: 84px;
 }
 
 .content-bottom-createpost button {
@@ -418,4 +418,72 @@ select:focus {
     border: none;
     background-color: #FFBE36;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 1610px) {
+    
+    .area-content-top-createpost {
+        display: flex;
+        flex-direction: column;
+        width: 657px;
+        height: auto;
+        padding: 14px;
+        border-radius: 6px;
+        background-color: #fff;
+        margin-bottom: 47px;
+        box-shadow: 0 0 40px 10px rgba(119, 119, 119, 0.062);
+    }
+
+    .item-right-content-createpost {
+        display: flex;
+        flex-direction: column;
+        width: 631px;
+        height: 100%;
+        margin-top: 15px;
+        margin-right: 27px;
+        /* background-color: rgb(255, 160, 160); */
+    }
+    
+    .area-input-createpost {
+        margin-top: 15px;
+    }
+
+    .area-input-createpost input[type="text"] {
+        margin-top: 15px;
+    }
+
+    /* .content-bottom-createpost {
+        display: flex;
+        align-items: center;
+    } */
+
+    .area-content-bottom-createpost {
+        display: flex;
+        flex-direction: column;
+        width: 657px;
+        height: auto;
+        border-radius: 6px;
+        padding: 14px;
+        margin-bottom: 30px;
+        background-color: #fff;
+        box-shadow: 0 0 40px 10px rgba(119, 119, 119, 0.062);
+    }
+
+    .area-content-bottom-createpost div.item-top-content-createpost {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        /* background-color: #FFBE36; */
+        margin-bottom: 21px;
+    }
+    
+    .area-content-bottom-createpost div.item-bottom-content-createpost {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        /* background-color: #ff3636; */
+    }
 }

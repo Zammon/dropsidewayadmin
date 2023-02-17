@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 4px;
     border-radius: 6px;
     width: 30px;
     height: 30px;
@@ -13,7 +12,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 4px;
     border-radius: 6px;
     width: 30px;
     height: 30px;
@@ -44,11 +42,11 @@
 }
 
 .modal-delete-open-itemfilterbutton {
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    z-index: 99;
+    z-index: 99999;
     top: 0;
     left: 0;
     right: 0;
@@ -133,6 +131,8 @@
 
 .area-modal-delete-open-itemfilterbutton {
     position: relative;
+    display: flex;
+    flex-direction: column;
     z-index: 99999;
     width: 500px;
     height: 203px;

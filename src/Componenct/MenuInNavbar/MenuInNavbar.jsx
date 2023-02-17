@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 //CSS import
 import './MenuInNavbar.css'
 //React-Router-Dom
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //React-Icon import
 import { AiFillHome } from 'react-icons/ai'
@@ -15,6 +15,13 @@ export default function MenuInNavbar(props) {
     const { menu, link, image } = props;
     const [statusLogout, setStatusLogout] = useState();
     const [icons, setIcons] = useState();
+
+    const navigate = useNavigate();
+
+    const remove = () =>{
+        localStorage.removeItem("user");
+        navigate("/");
+    }
 
     // Check: Menu Logout
     useEffect(()=>{
@@ -40,7 +47,6 @@ export default function MenuInNavbar(props) {
         } else {
             setIcons("");
         }
-        
     },[menu])
 
 

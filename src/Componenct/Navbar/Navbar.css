@@ -44,18 +44,6 @@
     color: #FFFFFF;
 }
 
-.default-admin-color-navbar {
-    background-color: #cfcfcf;
-}
-
-.superadmin-color-navbar {
-    background-color: #E50158!important;
-}
-
-.admin-color-navbar {
-    background-color: #FF740F!important;
-}
-
 .area-name-admin-navbar {
     font-size: 16px;
     font-weight: bold;

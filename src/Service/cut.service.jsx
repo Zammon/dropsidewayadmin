@@ -1,6 +1,6 @@
 import React from "react";
 
- function CutDate(date){
+ export function CutDate(date){
     const dateonly = date?.replace(/[^\d.]/g, '').slice(0, 8);
     const day = dateonly?.slice(6,8);
     const month = dateonly?.slice(4,6);
@@ -9,9 +9,12 @@ import React from "react";
     return result;
 }
 
-function CutTime(time) {
+export function CutTime(time) {
     let timeonly = time?.slice(0,5);
     return timeonly;
 }
 
-export { CutDate, CutTime };
+export function CutTel(tel) {
+    let telphone = tel.slice(0,3) + "-" + tel.slice(3,6) + "-" + tel.slice(6,10)
+    return telphone;
+}

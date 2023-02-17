@@ -1,6 +1,5 @@
 import React,{ useState } from 'react';
 import { useEffect } from 'react';
-import { Areapostapi, Categorypostapi, Tagpostapi, Typepostapi } from '../../Service/RequestAPI.service';
 import axios from 'axios';
 
 export const SelectsContext = React.createContext();

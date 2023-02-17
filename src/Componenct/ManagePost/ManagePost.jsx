@@ -1,51 +1,60 @@
-//React import
 import { useState, useEffect } from "react";
-//CSS import
 import './ManagePost.css'
-//Axios import
 import axios from "axios";
-import { MdRefresh } from 'react-icons/md'
-
-//Component import
-import Itemlistpost from "../Itemlistpost/Itemlistpost";
-
-//Service import 
-import { CutDate, CutTime } from '../../Service/Cutdatatime.service'
-import Settimedelay from "../useHooks/settimedelay";
 import { useContext } from "react";
 import { SelectsContext } from "../UseContexts/SelectContext";
+import Table from "../Table/Table";
+import ItemManagePost from "../Table/Items/ItemManagePost/ItemManagePost";
+import { headersManagePost } from "../Table/header/headerManagePost";
+import SelectFilter, { RefreshButton } from "../SelectFilter/SelectFilter";
 
 function ManagePost(){ 
-    const [listpost,setListPost] = useState();
-    const [loading, setLoading] = useState(false);
-    const { selectTypePost, selectTypeArea, selectTypeCategory, selectTypeTags } = useContext(SelectsContext);
-    const mapListPost = listpost&&listpost.data.map((values,index)=>{
-                            return <Itemlistpost key={index} targetpost={values&&values.idPost} statuspost={values&&values.statusPost} img={values&&values.nameImage} title={values&&values.title} type={values&&values.type} categoryitem={values&&values.categoryItem} tag={values&&values.tagsPost} area={values&&values.areaLost} profile={values&&values.profileAccout} firstname={values&&values.firstname} lastname={values&&values.lastname} date={CutDate(values&&values.datePost) }  time={CutTime(values&&values.timePost)}  />
-                        })
-
-    const Listpost = async ()=> {
-        const data = await axios.get("https://localhost:7113/api/DropsidewayAdmin/GetListPost");
-        setListPost(data);
-        console.log(data);
-    }
-
-    const RefreshListpost = async ()=> {
-        setLoading(true);
-        const data = await axios.get("https://localhost:7113/api/DropsidewayAdmin/GetListPost");
-        setListPost(data);
-        Settimedelay(setLoading(false),10000);
+    const [posts, setPosts] = useState();
+    const { selectTypePost, selectTypeArea, selectTypeCategory, } = useContext(SelectsContext);
+    const [ filters, setFilters ] = useState();
+    const ListPost = async ()=> {
+        const data = await axios.get("https://localhost:7113/api/DropsidewayAdmin/GetListPost",{
+            headers: {
+                'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+              }
+            }
+        );
+        setPosts(data);
     }
 
     useEffect(()=>{
-        Listpost();
+        ListPost();
+        console.log("User Name :" + JSON.parse(localStorage.getItem("token")));
     },[])
+
+    const mapPost = posts&&posts.data.map((data, index)=>{
+        return(
+            <ItemManagePost 
+                key={index} 
+                id={posts&&data.idPost}
+                image={posts&&data.image}
+                title={posts&&data.title}
+                type={posts&&data.type}
+                categoryItem={posts&&data.categoryItem}
+                tag={posts&&data.tag}
+                area={posts&&data.areaLost}
+                datePost={posts&&data.date}
+                timePost={posts&&data.time}
+                status={posts&&data.status}
+                profile={posts&&data.profile}
+                firstname={posts&&data.firstname}
+                lastname={posts&&data.lastname}
+                header={headersManagePost}
+            />
+        )
+    })
 
     return(
         <>
-            <div className="container-page">
+            <div className="container-page" >
                 <div className="content-top-managepost">
                     <div className="area-top-title-managepost">
-                        Manage Post
+                        จัดการโพสต์
                         <div className="area-input-search-mangepost">
                             <div className="area-icon-search-managepost">
 
@@ -54,66 +63,23 @@ function ManagePost(){
                         </div>
                     </div>
                     <div className="area-top-description-managepost">
-                        This page is for managing user posts on the website.
+                        หน้าสำหรับจัดการโพสต์ และดูรายเอียดของโพสต์
                     </div>
+                    
                 </div>
-                <div className="content-bottom-managepost">
-                    <div className="area-filter-managepost">
-                        <div className="area-title-filter-managepost">
-                            Menu Manage Posts :
-                        </div>
-                        <div className="area-select-filter-managepost">
-                            <select>
-                                <option>{`[ กรุณาเลือก${selectTypePost&&selectTypePost.data.nameFilter} ]`}</option>
-                                {selectTypePost&&selectTypePost.data.nameItemFilter.map((e,i)=>{
-                                return  <option key={i} value={selectTypeCategory && e}>
-                                            {selectTypeCategory && e}
-                                        </option>
-                                })}
-                            </select>
-                            <select>
-                                <option>{`[ กรุณาเลือก${selectTypeCategory&&selectTypeCategory.data.nameFilter} ]`}</option>
-                                {selectTypeCategory&&selectTypeCategory.data.nameItemFilter.map((e,i)=>{
-                                return  <option key={i} value={selectTypeCategory && e}>
-                                            {selectTypeCategory && e}
-                                        </option>
-                                })}
-                            </select>
-                            <select>
-                                <option>{`[ กรุณาเลือก${selectTypeArea&&selectTypeArea.data.nameFilter} ]`}</option>
-                                {selectTypeArea&&selectTypeArea.data.nameItemFilter.map((e,i)=>{
-                                return  <option key={i} value={selectTypeArea && e}>
-                                            {selectTypeArea && e}
-                                        </option>
-                                })}
-                            </select>
-                            <div className="area-button-refresh-managepost" onClick={RefreshListpost}>
-                                <div className="area-icon-refresh-managepost">
-                                    <MdRefresh size="23px" />
-                                </div>
-                                <div className="area-text-refresh-managepost">
-                                    Refresh
-                                </div>
-                            </div>
-                        </div>
-                        
+                <div className="filter-maangepost">
+                    <div className="filter-label-maangepost">
+                        เมนูจัดการโพสต์: 
                     </div>
-                    <div className="area-list-item-managepost">
-                        <div className="area-title-list-item-managepost">
-                            <div className="area-title-post-managepost">Title Post</div>
-                            <div className="area-type-post-managepost">Type Post</div>
-                            <div className="area-categoryItem-post-managepost">CategoryItem</div>
-                            <div className="area-tag-post-managepost">Tag</div>
-                            <div className="area-area-post-managepost">Area</div>
-                            <div className="area-posted-post-managepost">Posted By</div>
-                            <div className="area-date-time-post-managepost">Date and Time</div>
-                        </div>
-                        <div className="area-item-list-post-managepost">
-                            {loading?  <div className="area-loading-managepost">Loading...</div>:mapListPost}
-                        </div>
-                    </div>
+                    <SelectFilter label="[กรุณาเลือกประเภทโพสต์]" optionObject={selectTypePost&&selectTypePost.data.nameItemFilter} filters={(e)=>{setFilters({...filters, typeValue: e})}} />
+                    <SelectFilter label="[กรุณาเลือกประเภทสิ่งของ]" optionObject={selectTypeArea&&selectTypeArea.data.nameItemFilter} filters={(e)=>{setFilters({...filters, categoryValue: e})}}/>
+                    <SelectFilter label="[กรุณาเลือกบริเวณหรือพื้นที่ของหาย]" optionObject={selectTypeCategory&&selectTypeCategory.data.nameItemFilter} filters={(e)=>{setFilters({...filters, areaValue: e})}}/>
+                    <RefreshButton onClick={ListPost}/>
                 </div>
-            </div>
+                <div className="">
+                    <Table sx={{minHeight: 600}} headers={headersManagePost} items={mapPost} />
+                </div>
+            </div> 
         </>
     );
 }

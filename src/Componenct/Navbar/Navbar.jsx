@@ -1,43 +1,31 @@
-//React import
-import React, { useEffect, useState } from "react";
-//CSS import
+import React, { useEffect, useState, useContext} from "react";
 import './Navbar.css'
-//React-Router-Dom import
 import { Link } from "react-router-dom";
-//Axios import
 import axios from "axios";
-//Service API import
-import { Accoutapi } from "../../Service/RequestAPI.service";
-
-//Component import
+import { AuthContext } from '../UseContexts/AuthContext';
 import MenuInNavbar from "../MenuInNavbar/MenuInNavbar";
 
 export default function Navbar(props) {
-    const [accout, setaccout] = useState();
-    const [statusadmin, setStatusAdmin] = useState(null);
-
-    const Accouts = async () =>{
-      const data = await axios.post("https://localhost:7113/api/DropsidewayAdmin/Login",
-      {
-        "accout": "test",
-        "password": "test"
-      }
-      )
-      setaccout(data);
-    }
-    
-    useEffect(()=>{
-        Accouts();
-        
-    },[])
+    const { userdetail } = useContext(AuthContext);
+    const [colorType, setColorType] = useState("unknow-color-navprofile");
+    const getDetailUser = () => {
+        const data = axios.post("https://localhost:7113/api/DropsidewayAdmin/AccoutDetail", 
+        {
+           'idAccout': JSON.parse(localStorage.getItem("userId"))
+        }, 
+        {
+            headers: {
+                'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+            }
+        })}
 
     useEffect(()=>{
-        if(accout&&accout.data.type === "Super Admin"){
-            setStatusAdmin(true);
-          } else if(accout&&accout.data.type === "Admin") {
-             setStatusAdmin(false);
-          }
-    },[accout&&accout.data.type])
+        if(userdetail.type==="SuperAdmin"){
+            setColorType("superadmin-color-navprofile");
+        } else if (userdetail.type==="Admin"){
+            setColorType("admin-color-navprofile");
+        }
+    },[userdetail.type])
 
     return(
         <div className="container-main">
@@ -54,11 +42,11 @@ export default function Navbar(props) {
                     <div className="area-menu-bottom">
                         <div className="container-menuinnavbar">
                             <div className="area-icon-logout-menuinnavbar">
-                                <img className="images-full" src={accout && accout.data.profile} />
+                                <img className="images-full" src={userdetail.profile} alt=""/>
                             </div>
                             <Link className="link-set-default-navbar" to="/profile">
                                 <div className="area-name-color-active-menuinnavbar area-name-color-none-active-menuinnavbar">
-                                    {`${accout && accout.data.firstname} ${accout && accout.data.lastname}`}
+                                    {userdetail.name}
                                 </div>
                             </Link>
                         </div>
@@ -67,19 +55,19 @@ export default function Navbar(props) {
                     </div>
                 </div>
             </div>
-            <div style={{height: `${window.innerHeight-50}px!important`}} className="container-content">
+            <div className="container-content">
                 <div className="area-navbar-navbar">
-                    <div className={`area-rank-admin-navbar default-admin-color-navbar ${statusadmin ? "superadmin-color-navbar":"admin-color-navbar"}`}>
-                        {`${accout && accout.data.type}`}
+                    <div className={`area-rank-admin-navbar ${colorType}`}>
+                        {userdetail.type}
                     </div>
                     <div className="area-name-admin-navbar">
-                        {`${accout && accout.data.firstname} ${accout && accout.data.lastname}`}
+                        {userdetail.name}
                     </div>
                     <div className="area-id-admin-navbar">
-                        {`Admin ID : ${accout && accout.data.idAccout}`}
+                        {`Admin ID : ${userdetail.id}`}
                     </div>
                 </div>
-                {props.children}  
+                {props.children} 
             </div>
         </div>
     )

@@ -1,0 +1,40 @@
+.container-manageadmin {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding-top: 29px;
+    padding-left: 72px;
+    padding-right: 72px;
+    /* background-color: cadetblue; */
+}
+
+.title-manageadmin {
+    display: flex;
+    width: 100%;
+    height: auto;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.title-filter-manageadmin {
+    width: auto;
+    margin-right: 16px;
+}
+
+.filters-mangeadmin {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    margin-bottom: 16px;
+}
+
+.filter-label-manageadmin {
+    font-size: 15px;
+    width: auto;
+    height: auto;
+    padding-right: 15px;
+}
