@@ -18,7 +18,7 @@ export default function ItemManageAdmin({
         header,
     }) {
         const [typColor,setTypeColor] = useState();
-        
+        const [ deletes, setDeletes ] = useState(false);
         useEffect(()=>{
             if(type.toLowerCase()==="superadmin"){
                 setTypeColor(false);
@@ -28,7 +28,7 @@ export default function ItemManageAdmin({
         },[type])
 
         return(
-            <div className="container-item-manageadmin">
+            <div className="container-item-manageadmin" style={{display: deletes?'none':'flex'}}>
                 <div className="profile-admin margin-right">
                         <img className="images-full" src={profile ? profile : profileNone} alt="" />
                 </div>
@@ -62,7 +62,7 @@ export default function ItemManageAdmin({
                 <div style={{height: "100%", justifyContent:  "space-evenly", minWidth: header[8].width}}>
                     <Detailbutton id={id} status={status} />
                     <Editbutton id={id} status={status}/>
-                    <Deletebutton id={id} status={status}/>
+                    <Deletebutton id={id} deletes={setDeletes}/>
                 </div>
             </div>
         )

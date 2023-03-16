@@ -8,17 +8,6 @@ import MenuInNavbar from "../MenuInNavbar/MenuInNavbar";
 export default function Navbar(props) {
     const { userdetail } = useContext(AuthContext);
     const [colorType, setColorType] = useState("unknow-color-navprofile");
-    const getDetailUser = () => {
-        const data = axios.post("https://localhost:7113/api/DropsidewayAdmin/AccoutDetail", 
-        {
-           'idAccout': JSON.parse(localStorage.getItem("userId"))
-        }, 
-        {
-            headers: {
-                'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-            }
-        })}
-
     useEffect(()=>{
         if(userdetail.type==="SuperAdmin"){
             setColorType("superadmin-color-navprofile");
@@ -46,12 +35,12 @@ export default function Navbar(props) {
                             </div>
                             <Link className="link-set-default-navbar" to="/profile">
                                 <div className="area-name-color-active-menuinnavbar area-name-color-none-active-menuinnavbar">
-                                    {userdetail.name}
+                                    {userdetail.username}
                                 </div>
                             </Link>
                         </div>
                         <MenuInNavbar menu="จัดการผู้ใช้" link="/manageadmin" status={true} />
-                        <MenuInNavbar menu="ออกจากระบบ" link="/login" /> 
+                        <MenuInNavbar menu="ออกจากระบบ" link="/" /> 
                     </div>
                 </div>
             </div>
@@ -61,7 +50,7 @@ export default function Navbar(props) {
                         {userdetail.type}
                     </div>
                     <div className="area-name-admin-navbar">
-                        {userdetail.name}
+                        {userdetail.username}
                     </div>
                     <div className="area-id-admin-navbar">
                         {`Admin ID : ${userdetail.id}`}

@@ -10,12 +10,34 @@ export default function SelectContextProvider({ children }) {
     const [selectTypeArea, setSelectTypeArea] = useState();
     const [selectTypeCategory, setSelectTypeCategory] = useState();
     const [selectTypeTags, setSelectTypeTags] = useState();
+    const [selectTypeGender, setSelectTypeGendet] = useState();
+    const [selectTypeAccout, setSelectTypeAccout] = useState();
+    const [selectTypeStatusAccout, setSelectTypeStatusAccout] = useState();
 
 const locallhost = "localhost:7113";
 
-// Accout
-const Accoutapi = async ()=>{
-     return await axios.get(`https://${locallhost}/api/HomeAdmin/login/AdminLogin?accoutname=staff01&password=123456`)
+const Gender = async ()=> {
+    await axios.get(`https://${locallhost}/api/DropsidewayWebsite/Findtype/เพศแอดมิน`)
+    .then(req =>{
+        setSelectTypeGendet(req);
+    })
+    .catch(error => console.log(error));
+}
+
+const TypeAccout = async ()=> {
+    await axios.get(`https://${locallhost}/api/DropsidewayWebsite/Findtype/ประเภทแอดมิน`)
+    .then(req =>{
+        setSelectTypeAccout(req);
+    })
+    .catch(error => console.log(error));
+}
+
+const StatusAccout = async ()=> {
+    await axios.get(`https://${locallhost}/api/DropsidewayWebsite/Findtype/สถานะแอคเคาท์`)
+    .then(req =>{
+        setSelectTypeStatusAccout(req);
+    })
+    .catch(error => console.log(error));
 }
 
 // Typepost
@@ -76,6 +98,9 @@ useEffect( ()=>{
     Categorypostapi();
     Tagpostapi();
     Areapostapi();
+    Gender();
+    TypeAccout();
+    StatusAccout();
 },[])
     
     return(
@@ -84,7 +109,10 @@ useEffect( ()=>{
                 selectTypePost,setSelectTypePost,
                 selectTypeArea,setSelectTypeArea,
                 selectTypeCategory,setSelectTypeCategory,
-                selectTypeTags,setSelectTypeTags
+                selectTypeTags,setSelectTypeTags,
+                selectTypeGender, setSelectTypeGendet,
+                selectTypeAccout, setSelectTypeAccout,
+                selectTypeStatusAccout, setSelectTypeStatusAccout,
                 }}
         >
             {children}

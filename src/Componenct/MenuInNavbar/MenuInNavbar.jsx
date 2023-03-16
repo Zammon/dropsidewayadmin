@@ -1,5 +1,5 @@
 //React import
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 //CSS import
 import './MenuInNavbar.css'
 //React-Router-Dom
@@ -10,17 +10,21 @@ import { AiFillHome } from 'react-icons/ai'
 import { BsFillPlusSquareFill, BsFillGrid1X2Fill } from 'react-icons/bs'
 import { BiLogOut } from 'react-icons/bi'
 import { MdOutlineManageAccounts } from 'react-icons/md'
+import { AuthContext } from "../UseContexts/AuthContext";
 
 export default function MenuInNavbar(props) {
-    const { menu, link, image } = props;
+    const { menu, link } = props;
     const [statusLogout, setStatusLogout] = useState();
     const [icons, setIcons] = useState();
-
+    const { statusAuth ,setStatusAuth } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const remove = () =>{
-        localStorage.removeItem("user");
-        navigate("/");
+        if(statusAuth === false) {
+            setStatusAuth(true)
+            localStorage.removeItem("userId");
+            localStorage.removeItem("token");
+        }
     }
 
     // Check: Menu Logout
@@ -56,7 +60,7 @@ export default function MenuInNavbar(props) {
                 <div className={`${statusLogout ? "area-icon-logout-menuinnavbar" : `area-icon-menuinnavbar ${menu==="หน้าหลัก"?" area-icon-color-active-menunavbar":"area-icon-color-none-active-menunavbar"}`}`}>
                    {icons}
                 </div>
-                <Link className="link-set-default-menuinnavbar" to={link}>
+                <Link className="link-set-default-menuinnavbar" to={link??'#'} onClick={()=>{menu==="ออกจากระบบ" ? remove() : <></>}}>
                     <div className={`${statusLogout ? "area-name-menu-menuinnavbar logout" : `area-name-menu-menuinnavbar ${menu==="หน้าหลัก"?"area-name-color-active-menuinnavbar":"area-name-color-none-active-menuinnavbar"}`}`}>
                         {menu}
                     </div>

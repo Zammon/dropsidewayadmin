@@ -3,7 +3,6 @@ import Settimedelay from "../Uses/SetDelay";
 import "./Table.css";
 export default function Table({ sx, headers = [], items = [], loadings }) {
   const [minWidth, setMinWidth] = useState();
-  const [statusLoading, setStatusLoading] = useState(true);
   useEffect(() => {
     let sum = 0;
     for (let i = 0; i < headers.length; i++) {
@@ -11,12 +10,6 @@ export default function Table({ sx, headers = [], items = [], loadings }) {
     }
     setMinWidth(sum);
   }, [headers]);
-
-  // useEffect(()=>{
-  //     if(loadings){
-  //        setStatusLoading(true);
-  //     }  setStatusLoading(false);
-  // },[loadings])
 
   return (
     <div className="container-tables">

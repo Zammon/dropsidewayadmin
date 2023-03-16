@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import './CreatePost.css'
 import axios from "axios";
 import { ImCross } from "react-icons/im"
 import { BsPlusSquareFill } from "react-icons/bs"
 import { SelectsContext } from "../UseContexts/SelectContext";
-import { Typepostapi } from "../../Service/RequestAPI.service";
 
 function CreatePost(props) {
   // Disassemble of Props
-  const userID = localStorage.getItem('userId')
+  const userID = JSON.parse(localStorage.getItem('userId'));
   const { selectTypeArea, selectTypeCategory, selectTypeTags } = useContext(SelectsContext);
 
   // useState: Data New Post
@@ -26,7 +25,7 @@ function CreatePost(props) {
   const [lastname,setLastName] = useState("");
   const [nickname,setNickName] = useState("");
   const [studentid,setStudentID] = useState("");
-  const [typeperson,setTypePerson] = useState("User");
+  const [typeperson, setTypePerson] = useState("User");
   const [tels,setTels] = useState("");
   const [email,setEmail] = useState("");
 
@@ -82,8 +81,6 @@ function CreatePost(props) {
     setImage(newImage);
   };
 
- 
-
   const maptypetags =
     selectTypeTags && selectTypeTags.data.nameItemFilter.map((e, i) => {
       return (
@@ -122,7 +119,7 @@ function CreatePost(props) {
     bodyFormData.append("CategoryItem", CategoryItem);
     bodyFormData.append("Tag", Tag);
     bodyFormData.append("Area", Area);
-    bodyFormData.append("DirectoryArealost", DirectoryArealost);
+    bodyFormData.append("DirectoryArea", DirectoryArealost);
     bodyFormData.append("FirstName", firstname);
     bodyFormData.append("LastName", lastname);
     bodyFormData.append("NickName", nickname);
@@ -132,10 +129,13 @@ function CreatePost(props) {
     bodyFormData.append("Email", email);
 
     Images.forEach((Img) => {
-      bodyFormData.append("NameImage", Img);
+      bodyFormData.append("Image", Img);
     });
+
+    console.log("Body: ", bodyFormData.append)
+
     await axios
-      .post("https://localhost:7113/api/DropsidewayAdmin/CreatePosts", bodyFormData)
+      .post("https://localhost:7113/api/DropsidewayAdmin/CreatePost", bodyFormData)
       .then((result) => {
         if (result.data === "Complete") {
           // inputTypePostRef.current.click();
@@ -146,6 +146,13 @@ function CreatePost(props) {
           setArea("");
           setDirectoryArealost("");
           setImage([]);
+          setFirstName("");
+          setLastName("");
+          setNickName("");
+          setStudentID("");
+          setTypePerson("User");
+          setTels("");
+          setEmail("");
         }
         console.log(result);
       })
@@ -160,9 +167,9 @@ function CreatePost(props) {
     <>
       <div className="container-page">
         <div className="content-top-createpost">
-          <div className="content-top-title-createpost">Create Post</div>
+          <div className="content-top-title-createpost">สร้างโพส</div>
           <div className="content-top-description-createpost">
-            This page is for creating posts on lost and found items.
+            หน้าสำหรับสร้างโพสต์ของหายในเว็บไซต์
           </div>
         </div>
         <div className="content-bottom-createpost">
@@ -297,6 +304,7 @@ function CreatePost(props) {
               <div className="area-input-createpost">
                 รหัสนักศึกษา
                 <input
+                  className={`${typeReport ? 'area-input-disable':''}`}
                   type="text"
                   value={studentid} 
                   onChange={(e)=>{setStudentID(e.target.value)}}

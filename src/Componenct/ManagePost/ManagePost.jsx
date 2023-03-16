@@ -10,6 +10,7 @@ import SelectFilter, { RefreshButton } from "../SelectFilter/SelectFilter";
 
 function ManagePost(){ 
     const [posts, setPosts] = useState();
+    const [loading, setLoading] = useState(true);
     const { selectTypePost, selectTypeArea, selectTypeCategory, } = useContext(SelectsContext);
     const [ filters, setFilters ] = useState();
     const ListPost = async ()=> {
@@ -22,9 +23,16 @@ function ManagePost(){
         setPosts(data);
     }
 
+    function hadleOnClickRefresh() {
+        setLoading(true);
+        setTimeout(()=>{setLoading(false)},800)
+        ListPost();
+      };
+
     useEffect(()=>{
         ListPost();
-        console.log("User Name :" + JSON.parse(localStorage.getItem("token")));
+        const setLoadingfirst = setTimeout(()=>{setLoading(false)},800)
+        return ()=> clearTimeout(setLoadingfirst)
     },[])
 
     const mapPost = posts&&posts.data.map((data, index)=>{
@@ -72,12 +80,12 @@ function ManagePost(){
                         เมนูจัดการโพสต์: 
                     </div>
                     <SelectFilter label="[กรุณาเลือกประเภทโพสต์]" optionObject={selectTypePost&&selectTypePost.data.nameItemFilter} filters={(e)=>{setFilters({...filters, typeValue: e})}} />
-                    <SelectFilter label="[กรุณาเลือกประเภทสิ่งของ]" optionObject={selectTypeArea&&selectTypeArea.data.nameItemFilter} filters={(e)=>{setFilters({...filters, categoryValue: e})}}/>
-                    <SelectFilter label="[กรุณาเลือกบริเวณหรือพื้นที่ของหาย]" optionObject={selectTypeCategory&&selectTypeCategory.data.nameItemFilter} filters={(e)=>{setFilters({...filters, areaValue: e})}}/>
-                    <RefreshButton onClick={ListPost}/>
+                    <SelectFilter label="[กรุณาเลือกประเภทสิ่งของ]" optionObject={selectTypeCategory&&selectTypeCategory.data.nameItemFilter} filters={(e)=>{setFilters({...filters, categoryValue: e})}}/>
+                    <SelectFilter label="[กรุณาเลือกบริเวณหรือพื้นที่ของหาย]" optionObject={selectTypeArea&&selectTypeArea.data.nameItemFilter} filters={(e)=>{setFilters({...filters, areaValue: e})}}/>
+                    <RefreshButton onClick={hadleOnClickRefresh}/>
                 </div>
                 <div className="">
-                    <Table sx={{minHeight: 600}} headers={headersManagePost} items={mapPost} />
+                    <Table sx={{minHeight: 600, maxHeight: 600}} headers={headersManagePost} items={mapPost} loadings={loading}/>
                 </div>
             </div> 
         </>

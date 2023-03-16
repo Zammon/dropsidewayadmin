@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react';
 
-export default function SetDelay(callback, delay) {
+export const useSetDelay = (callback, delay) => {
     const stableCallback = useRef(callback);
 
     useEffect(()=>{

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { CutTime, CutDate } from "../../../../Service/cut.service"
 import { Deletebutton, Detailbutton, Editbutton } from "../../../Itemfilterbutton/Itemfilterbutton";
+import { BsImageAlt } from 'react-icons/bs';
 import './ItemManagePost.css'
 
 export default function ItemManagePost({
@@ -19,8 +20,8 @@ export default function ItemManagePost({
         lastname,
         header,
     }) {
-        const [typecolor, setTypeColor] = useState();
-        
+        const [ typecolor, setTypeColor ] = useState();
+        const [ deletes, setDeletes ] = useState(false);
         useEffect(()=>{
             if(type.toLowerCase() === "ตามหาเจ้าของ") {
                 setTypeColor(true)
@@ -30,9 +31,14 @@ export default function ItemManagePost({
         },[type])
 
         return(
-            <div className="container-item-managepost">
+            <div className="container-item-managepost" style={{display: deletes?'none':'flex'}}>
                 <div className="image-post">
-                    <img className="images-full" src={image} alt="" />
+                    {
+                        image ?
+                            <img className="images-full" src={image} alt="" />
+                        :
+                            <BsImageAlt color="#5F5F5F"/>
+                    }
                 </div>
                 <div className="text-overflow" style={{height: "100%", width: header[1].width}}>
                     <div className="text-overflow"  style={{width: header[1].width, maxWidth: header[1].width,}}>
@@ -75,7 +81,7 @@ export default function ItemManagePost({
                 <div style={{height: "100%", justifyContent: "space-evenly", width: header[8].width}}>
                     <Detailbutton id={id} status={status}/> 
                     <Editbutton id={id} status={status}/>
-                    <Deletebutton id={id} status={status}  />
+                    <Deletebutton id={id} deletes={setDeletes} />
                 </div>
             </div>
         )

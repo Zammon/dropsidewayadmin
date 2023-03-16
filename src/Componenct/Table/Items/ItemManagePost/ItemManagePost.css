@@ -30,6 +30,8 @@
 
 .image-post {
     display: flex;
+    align-items: center;
+    justify-content: center;
     width: 27px;
     min-width: 27px;
     height: 27px;

@@ -7,9 +7,23 @@ export default function SelectFilter({label, optionObject, filters}) {
         <select className="select-container" onChange={filters}>
             <option>{label}</option>
             {optionObject?.map((e,i)=>{
-            return  <option key={i} value={e}>
-                {e}
-            </option>
+            if(e === 'เปิดการใช้งาน') {
+                return  (
+                <option key={i} value={1}>
+                    {e}
+                </option>
+            )} else if (e === 'ปิดการใช้งาน') {
+                return (
+                <option key={i} value={2}>
+                    {e}
+                </option>
+            )}
+            
+            return (
+                <option key={i} value={e}>
+                    {e}
+                </option>
+            )
             })}
         </select>
     )

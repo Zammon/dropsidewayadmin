@@ -8,11 +8,12 @@ import axios from "axios";
 import bglogin from '../../bg_login.jpg'
 import { useContext } from "react";
 import { AuthContext } from "../UseContexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Login() {
-    const { setStatusAuth, setUserDetail } = useContext(AuthContext);
-
+    const { setStatusAuth } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
@@ -23,10 +24,10 @@ export default function Login() {
             "password": password
         })
         .then((data)=>{
-            setUserDetail({})
             localStorage.setItem("token", JSON.stringify(data.data.token));
             localStorage.setItem("userId", JSON.stringify(data.data.userId));
             setStatusAuth(false);
+            navigate('/');
         })
         .catch((error) => console.log(error))
     };

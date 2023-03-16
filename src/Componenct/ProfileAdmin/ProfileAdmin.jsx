@@ -7,7 +7,7 @@ import Table from "../Table/Table";
 import { headersManagePost } from "../Table/header/headerManagePost";
 import ItemManagePost from "../Table/Items/ItemManagePost/ItemManagePost";
 import SelectFilter, { RefreshButton } from "../SelectFilter/SelectFilter";
-import SetDelay from "../Uses/SetDelay";
+import { AuthContext } from "../UseContexts/AuthContext";
 
 export default function ProfileAdmin() {
   const [posts, setPosts] = useState();
@@ -19,8 +19,12 @@ export default function ProfileAdmin() {
     },
   ]);
   const [loading, setLoading] = useState(true);
+
   const { selectTypePost, selectTypeArea, selectTypeCategory } =
     useContext(SelectsContext);
+
+  const { userdetail } = useContext(AuthContext);
+
   const PostAdmin = async () => {
     const data = await axios.post(
       "https://localhost:7113/api/DropsidewayAdmin/Getlistposttarget",
@@ -30,14 +34,17 @@ export default function ProfileAdmin() {
     );
     setPosts(data);
   };
+
   function hadleOnClickRefresh() {
     setLoading(true);
-    SetDelay(()=>alert("Hello"), 5000);
+    setTimeout(()=>{setLoading(false)},800)
     PostAdmin();
   };
 
   useEffect(() => {
+    const setLoadingfirst = setTimeout(()=>{setLoading(false)},800)
     PostAdmin();
+    return ()=> clearTimeout(setLoadingfirst)
   },[]);
 
   const mapPost =
@@ -67,23 +74,14 @@ export default function ProfileAdmin() {
   return (
     <>
       <div className="container-page" style={{ padding: "0" }}>
-        <NavProfile
-          profile={undefined}
-          username={undefined}
-          type={undefined}
-          createAt={undefined}
-          gender={undefined}
-          birthday={undefined}
-          tel={undefined}
-        />
-        <button onClick={hadleOnClickRefresh}>Hello</button>
+        <NavProfile />
         <div className="container-profileadmin">
           <div className="title-profileadmin">
             {`โพสทั้งหมด(${posts ? posts && posts.data.length : "-"})`}
           </div>
           <div className="description-profileadmin">
             {`โดย`}
-            <div className="name-admin-profileadmin">{`Sahahphap Vorasan`}</div>
+            <div className="name-admin-profileadmin">{`${userdetail.username}`}</div>
           </div>
           <div className="filter-profileadmin">
             <div className="filter-label-profileadmin">เมนูจัดการโพสต์:</div>
@@ -114,7 +112,7 @@ export default function ProfileAdmin() {
                 setFilters({ ...filters, areaValue: e });
               }}
             />
-            <RefreshButton />
+            <RefreshButton onClick={hadleOnClickRefresh} />
           </div>
           <div className="table-profileadmin">
             <Table

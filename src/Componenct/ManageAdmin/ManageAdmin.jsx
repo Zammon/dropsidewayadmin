@@ -10,9 +10,10 @@ import { SelectsContext } from "../UseContexts/SelectContext";
 
 function ManageAdmin() {
     const [posts, setPosts] = useState();
+    const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState();
     const { selectTypePost, selectTypeArea, selectTypeCategory, } = useContext(SelectsContext);
-    const Listpost = async ()=> {
+    const ListPost = async ()=> {
         const data = await axios.get("https://localhost:7113/api/DropsidewayAdmin/ListAccout",{
             headers: {
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -23,8 +24,16 @@ function ManageAdmin() {
         console.log(data);
     }
 
+    function hadleOnClickRefresh() {
+        setLoading(true);
+        setTimeout(()=>{setLoading(false)},800)
+        ListPost();
+    };
+
     useEffect(()=>{
-        Listpost();
+        ListPost();
+        const setLoadingfirst = setTimeout(()=>{setLoading(false)},800)
+        return ()=> clearTimeout(setLoadingfirst)
     },[])
 
     const mapPost = posts&&posts.data.map((data, index)=>{
@@ -49,15 +58,7 @@ function ManageAdmin() {
     return(
         <> 
             <div className="container-page" style={{padding: "0"}}>
-                <NavProfile 
-                    profile={undefined}
-                    username={undefined}
-                    type={undefined}
-                    createAt={undefined}
-                    gender={undefined}
-                    birthday={undefined}
-                    tel={undefined}
-                />
+                <NavProfile />
                 <div className="container-manageadmin">
                     <div className="title-manageadmin">
                         {`แอคเคาท์ทั้งหมด (${posts?posts&&posts.data.length:"-"})`}
@@ -66,12 +67,12 @@ function ManageAdmin() {
                         <div className="filter-label-manageadmin">
                             ประเภทของแอคเคาท์:
                         </div>    
-                        <SelectFilter label="[กรุณาเลือกประเภทโพสต์]" optionObject={selectTypePost&&selectTypePost.data.nameItemFilter} filters={(e)=>{setFilters({...filters, typeValue: e})}} />
-                        <SelectFilter label="[กรุณาเลือกประเภทสิ่งของ]" optionObject={selectTypeArea&&selectTypeArea.data.nameItemFilter} filters={(e)=>{setFilters({...filters, categoryValue: e})}}/>
-                        <SelectFilter label="[กรุณาเลือกบริเวณหรือพื้นที่ของหาย]" optionObject={selectTypeCategory&&selectTypeCategory.data.nameItemFilter} filters={(e)=>{setFilters({...filters, areaValue: e})}}/>
-                        <RefreshButton onClick={Listpost}/>
+                        <SelectFilter label="[กรุณาเลือกประเภทแอดมิน]" optionObject={selectTypePost&&selectTypePost.data.nameItemFilter} filters={(e)=>{setFilters({...filters, typeValue: e})}} />
+                        <SelectFilter label="[กรุณาเลือกเพศ]" optionObject={selectTypeArea&&selectTypeArea.data.nameItemFilter} filters={(e)=>{setFilters({...filters, categoryValue: e})}}/>
+                        <SelectFilter label="[กรุณาเลือกแอคเคาท์]" optionObject={selectTypeCategory&&selectTypeCategory.data.nameItemFilter} filters={(e)=>{setFilters({...filters, areaValue: e})}}/>
+                        <RefreshButton onClick={hadleOnClickRefresh} />
                     </div>
-                    <Table sx={{minHeight: 400, maxHeight: 500}} headers={headerManageAdmin} items={mapPost} />
+                    <Table sx={{minHeight: 400, maxHeight: 400}} headers={headerManageAdmin} items={mapPost} loadings={loading} />
                 </div>
             </div>
         </> 

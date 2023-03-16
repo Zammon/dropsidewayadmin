@@ -10,7 +10,7 @@ function Editbutton({id, status}) {
     const [openview, setOpenview] = useState(true);
     
     const EditStatus = async(e)=>{
-        const data = await axios.patch("https://localhost:7113/api/DropsidewayAdmin/Changestatus",
+        const data = await axios.patch("https://localhost:7113/api/DropsidewayAdmin/ChangeStatusPost",
         {
             "idPost" : id,
             "statuspost" : e
@@ -57,19 +57,19 @@ function Editbutton({id, status}) {
     )
 }
 
-function Deletebutton({id, status}) {
+function Deletebutton({id, deletes}) {
     const [checkdelete ,setCheckDelete] = useState(false);    
     
     const DeleteStatus = async ()=>{
-        const data = await axios.patch("https://localhost:7113/api/DropsidewayAdmin/Changestatus",
+        const data = await axios.patch("https://localhost:7113/api/DropsidewayAdmin/ChangeStatusPost",
         {
             "idPost": id,
             "statuspost": "0"
         }
         ).then(result=>console.log(result))
         .catch(error=>console.log(error));
+        deletes(true);
         setCheckDelete(false);
-        status();
     };
 
     const ModelDelete = ({title, description}) => {
