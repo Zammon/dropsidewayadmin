@@ -3,6 +3,7 @@ import { CutTime, CutDate } from "../../../../Service/cut.service"
 import { Deletebutton, Detailbutton, Editbutton } from "../../../Itemfilterbutton/Itemfilterbutton";
 import { BsImageAlt } from 'react-icons/bs';
 import './ItemManagePost.css'
+import { TableTypeButton } from "../../../../Contexts/ButtonContext";
 
 export default function ItemManagePost({
         id,
@@ -79,9 +80,9 @@ export default function ItemManagePost({
                     </div>
                 </div>
                 <div style={{height: "100%", justifyContent: "space-evenly", width: header[8].width}}>
-                    <Detailbutton id={id} status={status}/> 
-                    <Editbutton id={id} status={status}/>
-                    <Deletebutton id={id} deletes={setDeletes} />
+                    <Detailbutton id={id} status={status} type={TableTypeButton.MANAGE_POST}/> 
+                    <Editbutton id={id} status={status} type={TableTypeButton.MANAGE_POST}/>
+                    <Deletebutton id={id} deletes={setDeletes} type={TableTypeButton.MANAGE_POST}/>
                 </div>
             </div>
         )

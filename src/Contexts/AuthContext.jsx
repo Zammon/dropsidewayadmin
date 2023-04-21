@@ -1,13 +1,13 @@
-import axios from 'axios';
 import { createContext,useState,useEffect } from 'react';
-import iconprofile from '../../userIconProfile.png'
+import iconprofile from '../userIconProfile.png'
+import AxiosFetch from './Fetchs/AxiosFetch';
 
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('userId');
-    const [statusAuth, setStatusAuth] = useState(true);
+    const [statusAuth, setStatusAuth] = useState();
     const [userdetail, setUserDetail] = useState(
         {
             profile: iconprofile,
@@ -22,9 +22,9 @@ export default function AuthContextProvider({ children }) {
     );
 
     const GetDetail = async () => {
-        await axios.post("https://localhost:7113/api/DropsidewayAdmin/AccoutDetail",
+        await AxiosFetch.post("DropsidewayAdmin/AccoutDetail",
         {
-                "idAccout": JSON.parse(localStorage.getItem("userId"))
+            "idAccout": JSON.parse(localStorage.getItem("userId"))
         }
         ,{
             headers: {
@@ -32,7 +32,6 @@ export default function AuthContextProvider({ children }) {
             }
         }
         ).then((req)=>{
-            console.log('detail user: ', req.data);
             setUserDetail(
                 {
                     id: req.data.id,
@@ -45,13 +44,18 @@ export default function AuthContextProvider({ children }) {
                     type: req.data.type,
                 }
             )
+            setStatusAuth(false);
         }).catch((error)=>{
+            setStatusAuth(true);
             console.log(error);
         })
     }
 
     useEffect(()=>{
-        if(!token||!id) return;
+        if(!token||!id) {
+            setStatusAuth(true);
+            return;
+        }
         GetDetail();
     },[id])
 

@@ -3,7 +3,7 @@
     justify-content: center;
     width: 100%;
     height: 419px;
-    margin: 50px 0;
+    margin: 30px 0;
 }
 
 .length-status-container {
@@ -55,6 +55,9 @@
 
 .center-container-homepage {
     display: flex;
+    position: relative;
+    transition: all .3s ease;
+    align-items: center;
     width: 550px;
     height: 419px;
     margin-right: 16px;
@@ -63,20 +66,87 @@
     background-color: #FFFFFF;
 }
 
+.center-container-homepage:hover {
+    position: relative;
+    z-index: 2;
+    transition: all .3s ease;
+    box-shadow: 0 0 30px 7px rgba(151, 151, 151, 0.274);
+    scale: 1.02;
+}
+
+.center-item-homepage {
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    height: 100%;
+    padding: 20px 0 0 0;
+}
+
+.center-item-homepage ul 
+{
+    list-style-type:square
+}
+
+.area-title-show-search-history-homepage {
+    display: flex;
+    align-items: center;
+    width: 322px;
+    height: 40px;
+    padding: 0 0 0 10px;
+    color: #C9C9C9;
+    font-size: 12px;
+    font-weight: 200;
+}
+
+.area-show-search-history-homepage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    width: 322px;
+    height: 100%;
+    margin: 0 0 0 0;
+    background-color: rgba(221, 221, 221, 0.082);
+    border: 1.5px solid #C9C9C9;
+    color: #C9C9C9;
+    font-size: 12px;
+    font-weight: 200;
+}
+
 .right-container-homepage {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    flex-direction: column;
     width: 350px;
     height: 419px;
-    margin-right: 16px;
-    border-radius: 12px;
-    box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.15);
-    background-color: #FFFFFF;
 }
 
 .bottom-container-homepage {
     display: flex;
+    /* justify-content: center; */
     width: 100%;
     height: auto;
-    background-color: aqua;
+    padding: 0 95px;
+    /* background-color: aqua; */
+}
+
+.area-graph-homepage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    padding: 20px;
+    box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.15);
+    background-color: #FFFFFF;
+    border-radius: 6px;
+}
+
+.area-graph-homepage:hover {
+    position: relative;
+    z-index: 2;
+    transition: all .3s ease;
+    box-shadow: 0 0 30px 7px rgba(151, 151, 151, 0.274);
+    scale: 1.02;
 }

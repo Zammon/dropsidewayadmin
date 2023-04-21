@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './NavProfile.css'
 import { CutDate, CutTel } from '../../Service/cut.service';
-import { AuthContext } from '../UseContexts/AuthContext';
+import { AuthContext } from '../../Contexts/AuthContext';
 import { useEffect } from 'react';
 
 

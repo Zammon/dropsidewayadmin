@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import Settimedelay from "../Uses/SetDelay";
+import React, { useEffect, useRef, useState } from "react";
 import "./Table.css";
-export default function Table({ sx, headers = [], items = [], loadings }) {
+export default function Table({ sx, headers = [], items = [], loadings, setRef }) {
   const [minWidth, setMinWidth] = useState();
+  const tableRef = useRef(null);
   useEffect(() => {
     let sum = 0;
     for (let i = 0; i < headers.length; i++) {
@@ -10,6 +10,11 @@ export default function Table({ sx, headers = [], items = [], loadings }) {
     }
     setMinWidth(sum);
   }, [headers]);
+
+  useEffect(()=>{
+    if(!setRef) return;
+    setRef(tableRef);
+  },[])
 
   return (
     <div className="container-tables">
@@ -31,7 +36,7 @@ export default function Table({ sx, headers = [], items = [], loadings }) {
           );
         })}
       </div>
-      <div className="area-items-tables" style={{ ...sx, minWidth: minWidth }}>
+      <div ref={tableRef} className="area-items-tables" style={{ ...sx, minWidth: minWidth }}>
         {loadings ? (
           <div
             className="area-loading-tables"

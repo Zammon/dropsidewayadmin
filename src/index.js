@@ -3,17 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-
 import { BrowserRouter } from 'react-router-dom';
-import AuthContextProvider from './Componenct/UseContexts/AuthContext';
+import AuthContextProvider from './Contexts/AuthContext';
+import AlertContextProvider from './Contexts/AlertContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthContextProvider>
-        <App />
-      </AuthContextProvider>
+      <AlertContextProvider>
+        <AuthContextProvider>
+          <App />
+        </AuthContextProvider>
+      </AlertContextProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

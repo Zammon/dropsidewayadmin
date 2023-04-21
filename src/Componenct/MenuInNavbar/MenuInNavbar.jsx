@@ -3,22 +3,20 @@ import React, { useContext, useEffect, useState } from "react";
 //CSS import
 import './MenuInNavbar.css'
 //React-Router-Dom
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //React-Icon import
 import { AiFillHome } from 'react-icons/ai'
 import { BsFillPlusSquareFill, BsFillGrid1X2Fill } from 'react-icons/bs'
 import { BiLogOut } from 'react-icons/bi'
 import { MdOutlineManageAccounts } from 'react-icons/md'
-import { AuthContext } from "../UseContexts/AuthContext";
+import { AuthContext } from "../../Contexts/AuthContext";
 
 export default function MenuInNavbar(props) {
     const { menu, link } = props;
     const [statusLogout, setStatusLogout] = useState();
     const [icons, setIcons] = useState();
     const { statusAuth ,setStatusAuth } = useContext(AuthContext);
-    const navigate = useNavigate();
-
     const remove = () =>{
         if(statusAuth === false) {
             setStatusAuth(true)

@@ -1,8 +1,97 @@
 import React,{ useState } from 'react';
 import { useEffect } from 'react';
-import axios from 'axios';
+import AxiosFetch from './Fetchs/AxiosFetch';
 
 export const SelectsContext = React.createContext();
+
+export const GenderSelect = [
+    {
+        title: 'ชาย',
+        value: 'ชาย'
+    },
+    {
+        title: 'หญิง',
+        value: 'หญิง'
+    },
+    {
+        title: 'อื่นๆ',
+        value: 'อื่นๆ'
+    }
+]
+
+export const DaySelect = () => {
+    var result = []
+    for(let i=1; i<32; i++) {
+        if(i.toString().length === 1){
+            result.push({ title: `${i}`, value: `0${i}`});
+        } else {
+            result.push({ title: `${i}`, value: `${i}`});
+        }
+    }
+    return result;
+}
+
+export const MonthSelect = [
+    {
+        title: 'มกราคม',
+        value: '01'
+    },
+    {
+        title: 'กุมภาพันธ์',
+        value: '02'
+    },
+    {
+        title: 'มีนาคม',
+        value: '03'
+    },
+    {
+        title: 'เมษายน',
+        value: '04'
+    },
+    {
+        title: 'พฤษภาคม',
+        value: '05'
+    },
+    {
+        title: 'มิถุนายน',
+        value: '06'
+    },
+    {
+        title: 'กรกฎาคม',
+        value: '07'
+    },
+    {
+        title: 'สิงหาคม',
+        value: '08'
+    },
+    {
+        title: 'กันยายน',
+        value: '09'
+    },
+    {
+        title: 'ตุลาคม',
+        value: '10'
+    },
+    {
+        title: 'พฤศจิกายน',
+        value: '11'
+    },
+    {
+        title: 'ธันวาคม',
+        value: '12'
+    },
+]
+
+export const YearSelect = () => {
+    const now = new Date();
+    const options = { timeZone: 'Asia/Bangkok', year: 'numeric' };
+    const yearsTH = [];
+    for (let year = now.getFullYear(); year >= now.getFullYear() - 50; year--) {
+        const yearTH = new Date(year, 0, 1).toLocaleString('en-US', options);
+        yearsTH.push(yearTH);
+    }
+    return yearsTH;
+}
 
 export default function SelectContextProvider({ children }) {
     
@@ -13,11 +102,10 @@ export default function SelectContextProvider({ children }) {
     const [selectTypeGender, setSelectTypeGendet] = useState();
     const [selectTypeAccout, setSelectTypeAccout] = useState();
     const [selectTypeStatusAccout, setSelectTypeStatusAccout] = useState();
-
-const locallhost = "localhost:7113";
+    const [selectYears, setSelectYears] = useState();
 
 const Gender = async ()=> {
-    await axios.get(`https://${locallhost}/api/DropsidewayWebsite/Findtype/เพศแอดมิน`)
+    await AxiosFetch.get(`DropsidewayWebsite/Findtype/เพศแอดมิน`)
     .then(req =>{
         setSelectTypeGendet(req);
     })
@@ -25,7 +113,7 @@ const Gender = async ()=> {
 }
 
 const TypeAccout = async ()=> {
-    await axios.get(`https://${locallhost}/api/DropsidewayWebsite/Findtype/ประเภทแอดมิน`)
+    await AxiosFetch.get(`DropsidewayWebsite/Findtype/ประเภทแอดมิน`)
     .then(req =>{
         setSelectTypeAccout(req);
     })
@@ -33,7 +121,7 @@ const TypeAccout = async ()=> {
 }
 
 const StatusAccout = async ()=> {
-    await axios.get(`https://${locallhost}/api/DropsidewayWebsite/Findtype/สถานะแอคเคาท์`)
+    await AxiosFetch.get(`DropsidewayWebsite/Findtype/สถานะแอ็คเคาท์`)
     .then(req =>{
         setSelectTypeStatusAccout(req);
     })
@@ -42,8 +130,7 @@ const StatusAccout = async ()=> {
 
 // Typepost
 const Typepostapi = async () =>{
-    const values = await axios.get(`https://${locallhost}/api/DropsidewayWebsite/Findtype/ประเภทโพส`)
-    console.log(values);
+    const values = await AxiosFetch.get(`DropsidewayWebsite/Findtype/ประเภทโพสต์`)
     if((values&&values.data.length!==0)&&values&&values.request.status===200){
         return setSelectTypePost(values);
     }else return setSelectTypePost("No any items.");
@@ -51,8 +138,7 @@ const Typepostapi = async () =>{
 
 // Categorypost
 const Categorypostapi = async () =>{
-    const values = await axios.get(`https://${locallhost}/api/DropsidewayWebsite/Findtype/ประเภทสิ่งของหาย`)
-    console.log(values);
+    const values = await AxiosFetch.get(`DropsidewayWebsite/Findtype/ประเภทสิ่งของหาย`)
     if((values&&values.data.length!==0)&&values&&values.request.status===200){
         return setSelectTypeCategory(values);
     }else return setSelectTypeCategory("No any items.");
@@ -61,8 +147,7 @@ const Categorypostapi = async () =>{
 
 // Tagpost
 const Tagpostapi = async () =>{
-    const values = await axios.get(`https://${locallhost}/api/DropsidewayWebsite/Findtype/แท็กของที่หาย`)
-    console.log(values);
+    const values = await AxiosFetch.get(`DropsidewayWebsite/Findtype/แท็กของที่หาย`)
     if((values&&values.data.length!==0)&&values&&values.request.status===200){
         return setSelectTypeTags(values);
     }else return setSelectTypeTags("No any items.");
@@ -70,8 +155,8 @@ const Tagpostapi = async () =>{
 
 // Area missing or meetting lost item post
 const Areapostapi = async () =>{
-    const values = await axios.get(`https://${locallhost}/api/DropsidewayWebsite/Findtype/บริเวณพื้นที่พบเจอของหาย`)
-    console.log(values);
+    const values = await AxiosFetch.get(`DropsidewayWebsite/Findtype/บริเวณพื้นที่พบเจอของหาย`)
+
     if((values&&values.data.length!==0)&&values&&values.request.status===200){
         return setSelectTypeArea(values);
     }else return setSelectTypeArea("No any items.");
@@ -79,15 +164,13 @@ const Areapostapi = async () =>{
 
 // Create Post CreatePost.page
 const CreateNewpostapi = async (data) => {
-    const values = await axios.post(`https://${locallhost}/api/DropsidewayAdmin/CreatePosts`,data)
-    console.log(values);
+    const values = await AxiosFetch.post(`DropsidewayAdmin/CreatePosts`,data)
 }
 
 
 // List Item Post ManagePost.page
 const Listpostmanageapi = async () => {
-    const values = await axios.get(`https://${locallhost}/api/DropsidewayAdmin/GetListPost`)
-    console.log(values);
+    const values = await AxiosFetch.get(`DropsidewayAdmin/GetListPost`)
     if((values&&values.data.length!==0)&&values&&values.request.status===200){
         return values
     }else return "No any items."
@@ -113,6 +196,7 @@ useEffect( ()=>{
                 selectTypeGender, setSelectTypeGendet,
                 selectTypeAccout, setSelectTypeAccout,
                 selectTypeStatusAccout, setSelectTypeStatusAccout,
+                selectYears, setSelectYears
                 }}
         >
             {children}

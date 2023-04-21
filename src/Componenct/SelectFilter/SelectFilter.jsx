@@ -2,10 +2,10 @@ import React from 'react'
 import './SelectFilter.css'
 import { HiOutlineRefresh } from 'react-icons/hi'
 
-export default function SelectFilter({label, optionObject, filters}) {
+export default function SelectFilter({label, value, optionObject, filters}) {
     return(
-        <select className="select-container" onChange={filters}>
-            <option>{label}</option>
+        <select className="select-container" value={value} onChange={filters}>
+            <option value=''>{label}</option>
             {optionObject?.map((e,i)=>{
             if(e === 'เปิดการใช้งาน') {
                 return  (

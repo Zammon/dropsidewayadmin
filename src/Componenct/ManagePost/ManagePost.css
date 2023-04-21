@@ -31,6 +31,7 @@
     align-items: center;
     width: 322px;
     height: 36px;
+    min-height: 36px;
     padding: 0 5px ;
     border: 1.5px solid #C9C9C9;
     border-radius: 50px;
@@ -52,6 +53,9 @@
 }
 
 .area-icon-search-managepost {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-width: 26px;
     height: 26px;
     border-radius: 50%;

@@ -3,6 +3,7 @@ import { CutDate, CutTel } from "../../../../Service/cut.service"
 import { Deletebutton, Detailbutton, Editbutton } from "../../../Itemfilterbutton/Itemfilterbutton"
 import './ItemManageAdmin.css'
 import profileNone from '../../../../userIconProfile.png'
+import { TableTypeButton } from "../../../../Contexts/ButtonContext"
 
 export default function ItemManageAdmin({
         id,
@@ -60,9 +61,9 @@ export default function ItemManageAdmin({
                     {CutDate(createAt)}
                 </div>
                 <div style={{height: "100%", justifyContent:  "space-evenly", minWidth: header[8].width}}>
-                    <Detailbutton id={id} status={status} />
-                    <Editbutton id={id} status={status}/>
-                    <Deletebutton id={id} deletes={setDeletes}/>
+                    <Detailbutton id={id} status={status} type={TableTypeButton.MANAGE_ADMIN}/>
+                    <Editbutton id={id} status={status} type={TableTypeButton.MANAGE_ADMIN}/>
+                    <Deletebutton id={id} deletes={setDeletes} type={TableTypeButton.MANAGE_ADMIN}/>
                 </div>
             </div>
         )
