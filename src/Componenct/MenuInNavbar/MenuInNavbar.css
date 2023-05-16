@@ -11,10 +11,12 @@
 
 .area-menu-active {
     background-color: #193B56;
+    transition: all .3s ease;
 }
 
 .area-menu-none-active {
     background-color: #fff;
+    transition: all .25s ease;
 }
 /* Icon  */
 .area-icon-menuinnavbar {

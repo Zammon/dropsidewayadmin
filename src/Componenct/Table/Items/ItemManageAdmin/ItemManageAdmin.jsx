@@ -4,6 +4,7 @@ import { Deletebutton, Detailbutton, Editbutton } from "../../../Itemfilterbutto
 import './ItemManageAdmin.css'
 import profileNone from '../../../../userIconProfile.png'
 import { TableTypeButton } from "../../../../Contexts/ButtonContext"
+import { Link } from "react-router-dom"
 
 export default function ItemManageAdmin({
         id,
@@ -39,9 +40,9 @@ export default function ItemManageAdmin({
                     </div>
                 </div>
                 <div className="margin-right" style={{height: "100%", justifyContent:  header[2].center? "center" : "flex-start", minWidth: header[2].width}}>
-                    <div>
+                    <Link to={`../profile/${id}`} style={{textDecoration: 'none', color: 'black'}}>
                         {`${firstname} ${lastname}`}
-                    </div>
+                    </Link>
                 </div>
                 <div className="margin-right" style={{height: "100%", justifyContent:  header[3].center? "center" : "flex-start", minWidth: header[3].width}}>
                     <div>

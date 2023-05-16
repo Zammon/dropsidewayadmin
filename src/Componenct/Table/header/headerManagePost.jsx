@@ -8,14 +8,14 @@ export const headersManagePost = [
         
     },
     {
-        title: "ชื่อโพส",
+        title: "ชื่อโพสต์",
         width: 190,
         center: false,
         display: true,
         headerMargin: 0
     },
     {
-        title: "ประเภทโพส",
+        title: "ประเภทโพสต์",
         width: 150,
         center: true,
         display: true,

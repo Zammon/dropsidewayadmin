@@ -4,9 +4,11 @@ import { Deletebutton, Detailbutton, Editbutton } from "../../../Itemfilterbutto
 import { BsImageAlt } from 'react-icons/bs';
 import './ItemManagePost.css'
 import { TableTypeButton } from "../../../../Contexts/ButtonContext";
+import { Link } from "react-router-dom";
 
 export default function ItemManagePost({
         id,
+        idAccout,
         image,
         title,
         type,
@@ -43,7 +45,9 @@ export default function ItemManagePost({
                 </div>
                 <div className="text-overflow" style={{height: "100%", width: header[1].width}}>
                     <div className="text-overflow"  style={{width: header[1].width, maxWidth: header[1].width,}}>
-                        {title}
+                        <Link style={{textDecoration: 'none', color: 'black'}} to={`../review-post/${id}`}>
+                            {title}
+                        </Link>
                     </div>
                 </div>
                 <div style={{height: "100%", justifyContent:  header[2].center? "center" : "flex-start",width: header[2].width}}>
@@ -71,7 +75,9 @@ export default function ItemManagePost({
                         <img className="images-full" src={profile} alt="" />
                     </div>
                     <div className="text-overflow" style={{width: header[6].width - 50}}>
-                        {`${firstname} ${lastname}`}
+                        <Link style={{textDecoration: 'none', color: 'black'}} to={`../profile/${idAccout}`}>
+                            {`${firstname} ${lastname}`}
+                        </Link>
                     </div>
                 </div>
                 <div style={{height: "100%", justifyContent:  header[7].center? "center" : "flex-start", width: header[7].width}}>

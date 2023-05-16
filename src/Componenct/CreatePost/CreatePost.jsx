@@ -5,7 +5,6 @@ import { BsPlusSquareFill } from "react-icons/bs"
 import { SelectsContext } from "../../Contexts/SelectContext";
 import AxiosFetch from "../../Contexts/Fetchs/AxiosFetch";
 import { AlertContext, AlertType } from "../../Contexts/AlertContext";
-import ButtonModal from "../Buttons/ButtonModal";
 
 function CreatePost(props) {
   // Disassemble of Props
@@ -37,6 +36,7 @@ function CreatePost(props) {
   const [typeperson, setTypePerson] = useState("User");
   const [tels,setTels] = useState("");
   const [email,setEmail] = useState("");
+  // varidations
   const [titleValidation,setTitleValidation] = useState(false);
   const [directoryValidation,setDirectoryValidation] = useState(false);
   const [catectoryValidation,setCatectoryValidation] = useState(false);
@@ -333,7 +333,7 @@ function CreatePost(props) {
     <>
       <div className="container-page">
         <div className="content-top-createpost">
-          <div className="content-top-title-createpost">สร้างโพส</div>
+          <div className="content-top-title-createpost">สร้างโพสต์</div>
           <div className="content-top-description-createpost">
             หน้าสำหรับสร้างโพสต์ของหายในเว็บไซต์
           </div>
@@ -348,7 +348,7 @@ function CreatePost(props) {
               <div className="item-left-first-line-createpost">
                 <div className="title-post-createpost">
                   <div className="box-title-validation-createpost">
-                    หัวข้อโพส
+                    หัวข้อโพสต์
                     {
                       titleValidation ?
                       <div className="validation-createpost">*กรุณากรอกชื่อหัวข้อโพสต์</div>
@@ -356,10 +356,10 @@ function CreatePost(props) {
                       (<></>)
                     }
                   </div>
-                  <input type="text" value={Title} onChange={(e)=>{setTitle(e.target.value)}} placeholder="กรอกหัวข้อโพส..." />
+                  <input type="text" value={Title} onChange={(e)=>{setTitle(e.target.value)}} placeholder="กรอกหัวข้อโพสต์..." />
                 </div>
                 <div className="type-post-createpost">
-                  ประเภทของโพส
+                  ประเภทของโพสต์
                   <div className="area-input-type-post-createpost">
                     <div className="">
                       <input
@@ -389,7 +389,7 @@ function CreatePost(props) {
                       (<></>)
                     }
                 </div>
-                <textarea value={Directory} onChange={(e)=>{setDirectory(e.target.value)}} placeholder="กรอกรายละเอียดของโพส..." />
+                <textarea value={Directory} onChange={(e)=>{setDirectory(e.target.value)}} placeholder="กรอกรายละเอียดของโพสต์..." />
               </div>
               <div className="item-left-third-line-createpost">
                 <div className="category-post-createpost">
@@ -488,7 +488,7 @@ function CreatePost(props) {
                               <BsPlusSquareFill fill="#D9D9D9" size="100%"/>
                             </div>
                             <div className="">
-                              อัพโหลดรูปภาพ    
+                              อัปโหลดรูปภาพ    
                             </div>
                         </div>
                       :""}
@@ -503,7 +503,7 @@ function CreatePost(props) {
                             <BsPlusSquareFill fill="#D9D9D9" size="100%"/>
                           </div>
                           <div className="">
-                            อัพโหลดรูปภาพ    
+                            อัปโหลดรูปภาพ    
                           </div>
                       </div>
                     }
@@ -618,7 +618,7 @@ function CreatePost(props) {
               />
             </div>
           </div>
-          <button className="" onClick={createNewPost}>สร้างโพส</button>
+          <button className="" onClick={createNewPost}>สร้างโพสต์</button>
         </div>
       </div>
     </>

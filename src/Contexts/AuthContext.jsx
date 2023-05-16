@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 export default function AuthContextProvider({ children }) {
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('userId');
-    const [statusAuth, setStatusAuth] = useState();
+    const [statusAuth, setStatusAuth] = useState(true);
     const [userdetail, setUserDetail] = useState(
         {
             profile: iconprofile,

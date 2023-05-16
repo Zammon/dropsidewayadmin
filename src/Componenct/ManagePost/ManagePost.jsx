@@ -8,6 +8,8 @@ import { headersManagePost } from "../Table/header/headerManagePost";
 import SelectFilter, { RefreshButton } from "../SelectFilter/SelectFilter";
 import { FetchPosts, PushFetchPosts } from "../../Contexts/Fetchs/FetchPosts";
 import { FetchFilterPosts, PushFetchFilterPosts } from "../../Contexts/Fetchs/FetchFilterPosts";
+import { BiSearch } from 'react-icons/bi';
+import { FetchSearch, PushFetchSearch } from "../../Contexts/Fetchs/FetchSearch";
 
 function ManagePost(){ 
     const [posts, setPosts] = useState();
@@ -20,6 +22,7 @@ function ManagePost(){
         category: '',
         area: ''
     });
+    const [search, setSearch] = useState("");
 
     const FetchData = () => {
         FetchPosts(setPosts, pageIndex);
@@ -27,7 +30,25 @@ function ManagePost(){
         return ()=> clearTimeout(setLoadingfirst)
     };
 
+    const handleSearch = (e) => {
+        if(!search) return;
+        if(e.key !== 'Enter') return;
+        setFilters({
+            type: '',
+            category: '',
+            area: ''
+        });
+        setTimeout(()=>{
+            FetchSearch(setPosts, pageIndex, search);
+        },10)
+    }
+
     function hadleInfinityLoad() {
+        if(search) {
+            PushFetchSearch(setPosts, pageIndex, filters);
+            return;
+        }
+
         if(filters.area || filters.category || filters.type){
             PushFetchFilterPosts(setPosts, pageIndex, filters);
             return;
@@ -48,6 +69,7 @@ function ManagePost(){
     function hadleOnClickRefresh() {
         ref.current.scrollTo(0, 0)
         const setValue = () =>{
+            setSearch("");
             setFilters({
                 type: '',
                 category: '',
@@ -66,7 +88,6 @@ function ManagePost(){
         hadleInfinityLoad()
     },[pageIndex])
 
-
     useEffect(()=>{
         if(!ref) return;
         FetchData();
@@ -75,8 +96,10 @@ function ManagePost(){
     },[ref])
 
     useEffect(()=>{
-        if(!posts && pageIndex === 0) return
+        if(!posts && pageIndex === 0) return;
+        if(search.length > 0  && (!filters.area && !filters.category && !filters.type)) return;
         setPageIndex(0);
+        setSearch("");
         ref.current.scrollTo(0, 0)
         const setFilters = () => {
             if(!filters.area && !filters.category && !filters.type) {
@@ -94,6 +117,7 @@ function ManagePost(){
             <ItemManagePost 
                 key={index} 
                 id={posts&&data.idPost}
+                idAccout={posts && data.idAccout}
                 image={posts&&data.image}
                 title={posts&&data.title}
                 type={posts&&data.type}
@@ -118,16 +142,24 @@ function ManagePost(){
                     <div className="area-top-title-managepost">
                         จัดการโพสต์
                         <div className="area-input-search-mangepost">
-                            <div className="area-icon-search-managepost">
-
+                            <div className={`area-icon-search-managepost${search.length>0?"-active":""}`}>
+                                <BiSearch size="18px" fill="#fff"/>
                             </div>
-                            <input placeholder="Search user name tag type"/>
+                            <input type="text" 
+                            value={search} 
+                            onChange={(e)=>{
+                                // if(!e.target.value) {
+                                //     hadleOnClickRefresh();
+                                // }
+                                setSearch(e.target.value)
+                            }} 
+                            onKeyDown={handleSearch} 
+                            placeholder="Search user name tag type"/>
                         </div>
                     </div>
                     <div className="area-top-description-managepost">
                         หน้าสำหรับจัดการโพสต์ และดูรายเอียดของโพสต์
                     </div>
-                    
                 </div>
                 <div className="filter-maangepost">
                     <div className="filter-label-maangepost">

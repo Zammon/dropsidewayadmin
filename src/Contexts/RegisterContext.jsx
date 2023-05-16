@@ -15,6 +15,7 @@ export default function RegisterContextProvider({ children }) {
   const [tel, setTel] = useState("");
   const [idCard, setidCard] = useState("");
   const [profile, setProfile] = useState([]);
+  const [refreshFetch, setRefreshFetch] = useState();
 
   useEffect(() => {
     console.log("show:", showModalRegister);
@@ -70,6 +71,8 @@ export default function RegisterContextProvider({ children }) {
         setProfile,
         email,
         setEmail,
+        refreshFetch,
+        setRefreshFetch,
       }}
     >
       {children}

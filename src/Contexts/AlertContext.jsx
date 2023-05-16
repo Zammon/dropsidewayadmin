@@ -16,6 +16,9 @@ export default function AlertContextProvider({children}) {
     const [detailModal, setDetailModal] = useState('Detail Modal');
     //Button in Modal
     const [keepButtonCorrect, setKeepButtonCorrect] = useState([]);
+    //Images in Modal
+    const [imageTarget, setImageTarget] = useState("");
+    const [imageType, setImageType] = useState(false);
 
     return(
         <AlertContext.Provider 
@@ -24,6 +27,8 @@ export default function AlertContextProvider({children}) {
                 showModal, setShowModal,
                 titleModal, setTitleModal,
                 detailModal, setDetailModal,
+                imageTarget, setImageTarget,
+                imageType, setImageType,
                 keepButtonCorrect, setKeepButtonCorrect,
             }}
         >

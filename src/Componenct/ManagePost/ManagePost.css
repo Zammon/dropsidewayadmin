@@ -62,6 +62,20 @@
     overflow: hidden;
     margin-right: 10px;
     background-color: #A6A6A6;
+    transition: all .1s ease;
+}
+
+.area-icon-search-managepost-active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+    background-color: #43505A;
+    transition: all .1s ease;
 }
 
 .filter-maangepost {

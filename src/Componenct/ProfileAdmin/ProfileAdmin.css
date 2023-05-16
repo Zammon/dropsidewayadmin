@@ -10,6 +10,18 @@
     overflow-y: auto;
 }
 
+.go-back-button {
+    font-size: 15px;
+    color: #8F8F8F;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.go-back-button:hover {
+    text-decoration: underline;
+    color: #646464;
+}
+
 .title-profileadmin {
     width: 100%;
     height: auto;

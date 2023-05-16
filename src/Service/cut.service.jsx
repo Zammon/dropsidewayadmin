@@ -15,6 +15,9 @@ export function CutTime(time) {
 }
 
 export function CutTel(tel) {
+    if(!tel) {
+        return "-";
+    }
     let telphone = tel.slice(0,3) + "-" + tel.slice(3,6) + "-" + tel.slice(6,10)
     return telphone;
 }

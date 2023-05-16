@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef} from "react";
 import './Navbar.css'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from '../../Contexts/AuthContext';
 import MenuInNavbar from "../MenuInNavbar/MenuInNavbar";
 import { AlertContext, AlertType } from "../../Contexts/AlertContext";
@@ -10,6 +10,7 @@ import { RegisterContext } from "../../Contexts/RegisterContext";
 import { MdPhotoCamera } from "react-icons/md";
 import { DaySelect, GenderSelect, MonthSelect, YearSelect } from "../../Contexts/SelectContext";
 import { PostCreateAccout } from "../../Contexts/Fetchs/PostCreateAccout";
+import AxiosFetch from "../../Contexts/Fetchs/AxiosFetch";
 
 export default function Navbar(props) {
     const { userdetail } = useContext(AuthContext);
@@ -23,6 +24,9 @@ export default function Navbar(props) {
         setTypeModal,
         setTitleModal,
         setDetailModal,
+        imageTarget,
+        imageType,
+        setImageType,
     } = useContext(AlertContext);
     const {
         showModalRegister, setShowModalRegister,
@@ -36,7 +40,8 @@ export default function Navbar(props) {
         tel, setTel,
         idCard, setidCard,
         profile, setProfile,
-        email, setEmail
+        email, setEmail,
+        refreshFetch
     } = useContext(RegisterContext);
     const Years = YearSelect();
     const Day = DaySelect();
@@ -89,30 +94,36 @@ export default function Navbar(props) {
         setShowModal(true);
     }
 
-    const AlertCreateAccoutFail = () => {
+    const AlertCreateAccoutFail = (req) => {
+        if(req === 'This account name was already taken.') {
+            setTypeModal(AlertType.Alert);
+            setTitleModal("สร้างบัญชีผิดพลาด");
+            setDetailModal("เนื่องจากอีเมลล์นี้มีอยู่ในระบบอยู่แล้ว กรุณาใช้อีเมลล์อื่นเพื่อลงทะเบียน");
+            setShowModal(true);
+            return;
+        }
         setTypeModal(AlertType.Alert);
-        setTitleModal("สร้างบัญชีสำเร็จ");
-        setDetailModal("สร้างบัญชีสำเร็จแล้ว สามารถเข้าใจงานบัญชีได้ทันที");
+        setTitleModal("สร้างบัญชีผิดพลาด");
+        setDetailModal("การสร้างบัญชีผิดพลาด เนื่องจากปัญหาบางอย่าง กรุณาลองใหม่อีกครั้ง");
         setShowModal(true);
     }
 
     const hadleCreatePost = (e) => {
-        const Dates = new Date(`${year}-${month}-${day}`);
         e.preventDefault();
         const bodyFormData = new FormData();
-        bodyFormData.append("firstname", firstName);
-        bodyFormData.append("lastname", lastName);
-        bodyFormData.append("gender", gender);
-        bodyFormData.append("birthDay", Dates);
-        bodyFormData.append("type", typeAdmin);
-        bodyFormData.append("Tag", tel);
-        bodyFormData.append("email", email);
-        bodyFormData.append("accout", email);
-        bodyFormData.append("password", tel);
-        bodyFormData.append("pofile", profile[0]);
-        bodyFormData.append("Image", email);
-        //เหลือแก้ชื่อหัวข้อของ + ทดลองสร้างแอคเค้าท์ดูจริงๆ ปล.อาจจะแก้ฟอร์มหน่อยนึงตรงที่อาจจะให้กรอก accout / password เพิ่มได้ด้วย
-        PostCreateAccout(Dates, AlertCreateAccoutComplete, AlertCreateAccoutFail)
+        bodyFormData.append("Firstname", firstName);
+        bodyFormData.append("Lastname", lastName);
+        bodyFormData.append("Gender", gender);
+        bodyFormData.append("Day", Number(day));
+        bodyFormData.append("Month", Number(month));
+        bodyFormData.append("Year", Number(year));
+        bodyFormData.append("Type", typeAdmin);
+        bodyFormData.append("Tel", tel);
+        bodyFormData.append("Email", email);
+        bodyFormData.append("Accout", email);
+        bodyFormData.append("Password", tel);
+        bodyFormData.append("Profile", profile[0]);
+        PostCreateAccout(bodyFormData, AlertCreateAccoutComplete, AlertCreateAccoutFail);
     }
 
     const hadleResetValue = () => {
@@ -124,105 +135,170 @@ export default function Navbar(props) {
         setMonth('01')
         setYear('2023')
         setTypeAdmin('Admin')
+        setEmail('')
         setTel('')
         setidCard('')
         setProfile([])
     }
+
+    const [locationsStatus, setLocationStatus] = useState(
+        {
+            home: true,
+            createPost: false,
+            managePost: false,
+            manageAdmin: false,
+        }
+    );
+
+    const location = useLocation();
+    useEffect(()=>{
+        if(!location) return;
+        switch(location.pathname) {
+            case "/" : 
+                setLocationStatus({
+                    home: true,
+                    createPost: false,
+                    managePost: false,
+                    manageAdmin: false,
+                })
+                break;
+            case "/createpost" : 
+                setLocationStatus({
+                home: false,
+                createPost: true,
+                managePost: false,
+                manageAdmin: false,
+                })
+            break;
+            case "/managepost" : 
+                setLocationStatus({
+                    home: false,
+                    createPost: false,
+                    managePost: true,
+                    manageAdmin: false,
+                });
+                break;
+            case "/manageadmin" : 
+                setLocationStatus({
+                    home: false,
+                    createPost: false,
+                    managePost: false,
+                    manageAdmin: true,
+                });
+                break;
+            default: setLocationStatus({
+                home: false,
+                createPost: false,
+                managePost: false,
+                manageAdmin: false,}); break;
+        }
+    },[location])
 
     return(
         <div className="container-main">
             {
                 showModal ?
                 (
-                    <div className="modal-container-main">
-                        <div className="modal-item-main" style={{minHeight: `${typeModal===AlertType.Confirm ? '220px':''}`}}>
-                            {
-                                typeModal === AlertType.Warning ?
-                                (
-                                    <div style={{
-                                        display: 'flex', 
-                                        justifyContent: 'center', 
-                                        alignItems: 'center', 
-                                        width: '60px', 
-                                        minWidth: '60px', 
-                                        height: '60px', 
-                                        backgroundColor: 'green',
-                                        margin: '0 28px 0 0'    
-                                    }}>
-                                        
-                                    </div>
-                                )
-                                :
-                                (
-                                    <></>   
-                                )
-                            }
-                            <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',  
-                                    position: 'absolute', 
-                                    right: '10px', 
-                                    top: '16px', 
-                                    margin: '0 10px 0 0', 
-                                    cursor: 'pointer'
-                                    }} 
-                                onClick={()=>{setShowModal(false)}}
-                            >
-                                <RxCross2 size={24} />
-                            </div>
-                            <div style={{
-                                    display: 'flex', 
-                                    flexDirection: 'column', 
-                                    width: '100%', 
-                                    // backgroundColor: 'red'
-                                    }}
-                            >
-                                <div style={{fontSize: '20px', margin: '0 0 10px 0'}}>
-                                    {titleModal}
+                    <div className="modal-container-main" style={{zIndex: '9999'}}>
+                        {
+                            imageType ?
+                            (
+                                <div style={{display: 'flex', width: 'auto', height: '600px', borderRadius: '12px', overflow: 'hidden'}}>
+                                    <img className="images-full" src={imageTarget} alt=""/>
                                 </div>
-                                <div style={{
-                                    display: 'flex',
-                                    width: '100%', 
-                                    fontSize: '16px', 
-                                    fontWeight: '300'
-                                }}>
-                                    {detailModal}
-                                </div>
-                                {
-                                typeModal === AlertType.Confirm ?
-                                    (
-                                        <div style={{
-                                            display: 'flex', 
-                                            justifyContent: 'space-between',
-                                            height: 'auto', 
-                                            position: 'absolute', 
-                                            bottom: '21px', 
-                                            right: '20px',
-                                            width: '270px',
+                            )
+                            :
+                            (
+                                <div className="modal-item-main" style={{minHeight: `${typeModal===AlertType.Confirm ? '220px':''}`}}>
+                                    {
+                                        typeModal === AlertType.Warning ?
+                                        (
+                                            <div style={{
+                                                display: 'flex', 
+                                                justifyContent: 'center', 
+                                                alignItems: 'center', 
+                                                width: '60px', 
+                                                minWidth: '60px', 
+                                                height: '60px', 
+                                                backgroundColor: 'green',
+                                                margin: '0 28px 0 0'    
                                             }}>
-                                            {
-                                               keepButtonCorrect?.map((data,index)=>{
-                                                    return(
-                                                        <ButtonModal
-                                                        key={index}
-                                                        title={data.title}
-                                                        className={data.className} 
-                                                        OnClick={()=>{data.hadler()}}
-                                                        />
-                                                    );
-                                               })
-                                            }
+                                                
+                                            </div>
+                                        )
+                                        :
+                                        (
+                                            <></>   
+                                        )
+                                    }
+                                    <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',  
+                                            position: 'absolute', 
+                                            right: '10px', 
+                                            top: '16px', 
+                                            margin: '0 10px 0 0', 
+                                            cursor: 'pointer'
+                                            }} 
+                                        onClick={()=>{setShowModal(false)}}
+                                    >
+                                        <RxCross2 size={24} />
+                                    </div>
+                                    <div style={{
+                                            display: 'flex', 
+                                            flexDirection: 'column', 
+                                            width: '100%', 
+                                            // backgroundColor: 'red'
+                                            }}
+                                    >
+                                        <div style={{fontSize: '20px', margin: '0 0 10px 0'}}>
+                                            {titleModal}
                                         </div>
-                                    )
-                                :
-                                    (
-                                        <></>   
-                                    )
-                                }
-                            </div>
-                        </div>
-                        <div className="modal-background-main" onClick={()=>{setShowModal(false)}}></div>
+                                        <div style={{
+                                            display: 'flex',
+                                            width: '100%', 
+                                            fontSize: '16px', 
+                                            fontWeight: '300'
+                                        }}>
+                                            {detailModal}
+                                        </div>
+                                        {
+                                        typeModal === AlertType.Confirm ?
+                                            (
+                                                <div style={{
+                                                    display: 'flex', 
+                                                    justifyContent: 'space-between',
+                                                    height: 'auto', 
+                                                    position: 'absolute', 
+                                                    bottom: '21px', 
+                                                    right: '20px',
+                                                    width: '270px',
+                                                    }}>
+                                                    {
+                                                    keepButtonCorrect?.map((data,index)=>{
+                                                            return(
+                                                                <ButtonModal
+                                                                key={index}
+                                                                title={data.title}
+                                                                className={data.className} 
+                                                                OnClick={()=>{data.hadler()}}
+                                                                />
+                                                            );
+                                                    })
+                                                    }
+                                                </div>
+                                            )
+                                        :
+                                            (
+                                                <></>   
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                            )
+                        }
+                        <div className="modal-background-main" onClick={()=>{setShowModal(false); setImageType(false);}}></div>
                     </div>
                 )
                 :
@@ -354,7 +430,7 @@ export default function Navbar(props) {
                                 <input className="input-form-create-admin" type="text" value={tel} onChange={(e)=>{setTel(e.target.value)}} placeholder="กรุณากรอกเบอร์โทร"/>
                             </div>
                             <div className="rows-form-create-admin">
-                                <label className="label-form-create-admin">อีเมลล์</label>
+                                <label className="label-form-create-admin">อีเมล</label>
                                 <input className="input-form-create-admin" type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}} placeholder="กรุณากรอก e-mail"/>
                             </div>
                             <div className="rows-form-create-admin">
@@ -375,7 +451,7 @@ export default function Navbar(props) {
                                     backgroundColor: '#FFBE36',
                                     cursor: 'pointer'
                                 }}
-                                onClick={()=>{hadleCreatePost()}}
+                                onClick={(e)=>{hadleCreatePost(e)}}
                                 >
                                     สร้างบัญชี
                                 </button>
@@ -398,9 +474,9 @@ export default function Navbar(props) {
                     DropSideWay Admin Management
                 </div>
                 <div className="area-menu-top-navbar">
-                    <MenuInNavbar menu="หน้าหลัก" link="/" status={true} />
-                    <MenuInNavbar menu="สร้างโพส" link="/createpost" status={true}/>
-                    <MenuInNavbar menu="จัดการโพส" link="/managepost" icon="" status={true}/>
+                    <MenuInNavbar menu="หน้าหลัก" link="/" status={locationsStatus.home} />
+                    <MenuInNavbar menu="สร้างโพสต์" link="/createpost" status={locationsStatus.createPost}/>
+                    <MenuInNavbar menu="จัดการโพสต์" link="/managepost" icon="" status={locationsStatus.managePost}/>
                 </div>
                 <div className="area-menu-bottom-navbar">
                     <div className="area-menu-bottom">
@@ -416,7 +492,7 @@ export default function Navbar(props) {
                         </div>
                         {
                             checkType ?
-                            <MenuInNavbar menu="จัดการผู้ใช้" link="/manageadmin" status={true} />
+                            <MenuInNavbar menu="จัดการผู้ใช้" link="/manageadmin" status={locationsStatus.manageAdmin} />
                             :
                             <></>
                         }

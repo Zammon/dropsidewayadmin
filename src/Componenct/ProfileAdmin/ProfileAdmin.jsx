@@ -10,6 +10,7 @@ import { AuthContext } from "../../Contexts/AuthContext";
 import { FetchTargetPosts, PushFetchTargetPosts } from "../../Contexts/Fetchs/FetchTargetPosts";
 import { FetchFilterTargetPosts } from "../../Contexts/Fetchs/FetchFilterTargetPosts";
 import { PushFetchFilterTargetPosts } from "../../Contexts/Fetchs/FetchFilterTargetPosts";
+import { FetchCounts } from "../../Contexts/Fetchs/FetchCounts";
 
 export default function ProfileAdmin() {
   const [posts, setPosts] = useState();
@@ -70,6 +71,10 @@ export default function ProfileAdmin() {
   };
 
   useEffect(()=>{
+    FetchCounts(accoutId, "post", setCount)
+  },[])
+
+  useEffect(()=>{
     if(!posts || pageIndex === 0) return;
     hadleInfinityLoad()
   },[pageIndex])
@@ -101,6 +106,7 @@ export default function ProfileAdmin() {
         <ItemManagePost
           key={index}
           id={posts && data.idPost}
+          idAccout={posts && data.idAccout}
           image={posts && data.image}
           title={posts && data.title}
           type={posts && data.type}
@@ -121,10 +127,10 @@ export default function ProfileAdmin() {
   return (
     <>
       <div className="container-page" style={{ padding: "0" }}>
-        <NavProfile />
+        <NavProfile statusProfile={true} />
         <div className="container-profileadmin">
           <div className="title-profileadmin">
-            {`โพสทั้งหมด(${count})`}
+            {`โพสต์ทั้งหมด(${count})`}
           </div>
           <div className="description-profileadmin">
             {`โดย`}

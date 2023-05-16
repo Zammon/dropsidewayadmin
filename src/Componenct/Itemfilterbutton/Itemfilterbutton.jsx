@@ -121,7 +121,7 @@ function Deletebutton({id, deletes, type}) {
             "statuspost": "0"
         }
         ).then(req=>{
-            if(req.data === 'Complete') {
+            if(req.data === 'change status a post completed') {
                 deletes(true)
                 setShowModal(false);
                 hadleAlertComplete();
@@ -138,11 +138,11 @@ function Deletebutton({id, deletes, type}) {
     const PatchDeleteAccout = async ()=>{
         await AxiosFetch.patch("DropsidewayAdmin/ChangeStatusAccout",
         {
-            "idPost": id,
-            "statuspost": "0"
+            "idAccout": id,
+            "statusAccout": "0"
         }
         ).then(req=>{
-            if(req.data === 'Complete') {
+            if(req.data === 'change status a accout completed') {
                 deletes(true)
                 setShowModal(false);
                 hadleAlertComplete();

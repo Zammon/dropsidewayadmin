@@ -95,7 +95,7 @@ export default function Login() {
         {
           showModal ?
           (
-              <div className="modal-container-main">
+              <div className="modal-container-main" style={{zIndex: "99999"}}>
                   <div className="modal-item-main" style={{minHeight: `${typeModal===AlertType.Confirm ? '220px':''}`}}>
                       {
                           typeModal === AlertType.Warning ?
