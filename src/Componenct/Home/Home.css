@@ -45,6 +45,14 @@
     margin-right: 16px;
 }
 
+.card-history-container:hover {
+    position: relative;
+    z-index: 2;
+    transition: all .5s ease;
+    box-shadow: 0 0 30px 7px rgba(201, 201, 201, 0.274);
+    scale: 1.02;
+}
+
 .card-status-length-container:hover {
     position: relative;
     z-index: 2;

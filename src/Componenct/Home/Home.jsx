@@ -245,8 +245,8 @@ export default function Home() {
             <div className="row-contailer-homepage">
                 <div className="left-container-homepage">
                     <CardStatusLength label="จำนวนโพสที่รับแจ้งในวันนี้" color="#E50158" length={firstRow.postToDay}/>
-                    <CardStatusLength label="จำนวนผู้ที่เข้ามาของหาย" color="#F8AD11" length={firstRow.takeBack}/>
-                    <CardStatusLength label="จำนวนโพสที่ยังไม่มีผู้เข้ามารับของคืน" color="#193B56" length={firstRow.noneTakeBack}/>
+                    <CardStatusLength label="จำนวนผู้ที่เข้ามารับของหายประจำเดือน" color="#F8AD11" length={firstRow.takeBack}/>
+                    <CardStatusLength label="จำนวนของที่ยังไม่ได้รับคืนประจำเดือน" color="#193B56" length={firstRow.noneTakeBack}/>
                 </div>
                 <div className="center-container-homepage" style={{flexDirection: 'column', alignItems: 'center'}}>
                     <div className="title-grah-container">
@@ -264,12 +264,14 @@ export default function Home() {
                 <div className="right-container-homepage">
                     <div style={{display: 'flex', flexDirection: 'column', width: '100%', height: '100%'}}>
                       <div style={{display: 'flex', alignItems: 'center', height: '60px'}}>
-                        แอดมินที่โพสต์ล่าสุด
+                        โพสต์ล่าสุด
                       </div>
                       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between',width: '100%', height: '100%', borderTop: '1px solid #C9C9C9', padding: '10px 0'}}>
                         {history?.map((data, index) => {
                           return (
-                            <div key={index} style={{
+                            <div key={index} 
+                              className="card-history-container"
+                              style={{
                                   display:'flex',
                                   width: '100%',
                                   height:'55px',

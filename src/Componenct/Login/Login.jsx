@@ -71,7 +71,15 @@ export default function Login() {
       DetailAccout(req);
     })
     .catch(err=>{
-      if(err.response.request.status === 401) {
+      console.log("error message: ",err);
+      if(err.response.data === "No have a accout") {
+        setTypeModal(AlertType.Alert);
+        setTitleModal("เกิดข้อผิดพลาด");
+        setDetailModal("ผู้ใช้กรอกอีเมลหรือรหัสผ่านผิด กรุณาตรวจสอบอีเมลกับรหัสผ่านใหม่อีกครั้ง");
+        setShowModal(true);
+        return;
+      }
+      if(err.response.data === "This accout is blocked") {
         setTypeModal(AlertType.Alert);
         setTitleModal("บัญชีนี้ถูกระงับการใช้งาน");
         setDetailModal("ไม่สามารถเข้าถึงสู่ระบบได้ เนื่องจากบัญชีนี้ถูกระงับการใช้ กรุณาติดต่อเจ้าหน้าที่เพิ่อทำการปลดล็อค");
@@ -82,7 +90,6 @@ export default function Login() {
       setTitleModal(`${err.response.data}`);
       setDetailModal(`${err.code} ${err.message}`);
       setShowModal(true);
-      console.log("error message: ",err);
     })
 
   };

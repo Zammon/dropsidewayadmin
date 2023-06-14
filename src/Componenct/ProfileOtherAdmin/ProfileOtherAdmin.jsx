@@ -202,7 +202,7 @@ export default function ProfileOtherAdmin() {
           <div className="title-profileadmin">{`โพสทั้งหมด(${count})`}</div>
           <div className="description-profileadmin">
             {`โดย`}
-            <div className="name-admin-profileadmin">{`${userdetail.username}`}</div>
+            <div className="name-admin-profileadmin">{`${detailAccout?.username}`}</div>
           </div>
           <div className="filter-profileadmin">
             <div className="filter-label-profileadmin">เมนูจัดการโพสต์:</div>

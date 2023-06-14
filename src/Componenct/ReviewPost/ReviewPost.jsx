@@ -229,8 +229,8 @@ export default function ReviewPost() {
 
   const hadleAlertTakeBackComplete = () => {
     setTypeModal(AlertType.Alert);
-    setTitleModal("รับของคืน");
-    setDetailModal("...");
+    setTitleModal("สำเร็จ!");
+    setDetailModal("มีคนมารับของคืนหรือเจอของที่ตามหาแล้ว");
     setShowModal(true);
     EditStatusPost("3", navigate(-1));
   }

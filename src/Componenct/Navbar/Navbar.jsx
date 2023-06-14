@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef} from "react";
 import './Navbar.css'
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from '../../Contexts/AuthContext';
 import MenuInNavbar from "../MenuInNavbar/MenuInNavbar";
 import { AlertContext, AlertType } from "../../Contexts/AlertContext";
@@ -45,6 +45,7 @@ export default function Navbar(props) {
     } = useContext(RegisterContext);
     const Years = YearSelect();
     const Day = DaySelect();
+    const navigate = useNavigate();
     const selectDay = Day.map((data, index)=>{
         return(
             <option key={index} value={data.value}>
@@ -92,23 +93,65 @@ export default function Navbar(props) {
         setTitleModal("สร้างบัญชีสำเร็จ");
         setDetailModal("สร้างบัญชีสำเร็จแล้ว สามารถเข้าใจงานบัญชีได้ทันที");
         setShowModal(true);
+        setTimeout(()=>{navigate(0)},1500)
     }
 
     const AlertCreateAccoutFail = (req) => {
         if(req === 'This account name was already taken.') {
             setTypeModal(AlertType.Alert);
-            setTitleModal("สร้างบัญชีผิดพลาด");
-            setDetailModal("เนื่องจากอีเมลล์นี้มีอยู่ในระบบอยู่แล้ว กรุณาใช้อีเมลล์อื่นเพื่อลงทะเบียน");
+            setTitleModal("เกิดข้อผิดพลาด");
+            setDetailModal("มีอีเมลนี้อยู่ในระบบอยู่แล้ว กรุณาใช้อีเมลล์อื่นเพื่อลงทะเบียน");
             setShowModal(true);
             return;
         }
         setTypeModal(AlertType.Alert);
-        setTitleModal("สร้างบัญชีผิดพลาด");
-        setDetailModal("การสร้างบัญชีผิดพลาด เนื่องจากปัญหาบางอย่าง กรุณาลองใหม่อีกครั้ง");
+        setTitleModal("เกิดข้อผิดพลาด");
+        setDetailModal("การสร้างบัญชีเกิดข้อผิดพลาดบางอย่าง กรุณาลองใหม่อีกครั้ง");
         setShowModal(true);
     }
 
-    const hadleCreatePost = (e) => {
+    const WarningValidation = (req) => {
+        setTypeModal(AlertType.Alert);
+        setTitleModal("กรุณาตรวจสอบข้อมูลอีกครั้ง");
+        setDetailModal("ตรวจสอบข้อมูลอีกครั้ง ว่ามีการกรอกข้อมูลครบถ้วนหรือไม่");
+        setShowModal(true);
+    }
+
+    const hadleCreateAccout = (e) => {
+        if(!firstName || !lastName || !tel || !email || profile.length === 0) {
+            WarningValidation()
+            if(!firstName) {
+                setValidationFirstName(true);
+            } else {
+                setValidationFirstName(false);
+            }
+            if(!lastName) {
+                setValidationLastName(true);
+            }else {
+                setValidationLastName(false);
+            }
+            if(!email) {
+                setValidationEmail(true);
+            }else {
+                setValidationEmail(false);
+            }
+            if(!tel) {
+                setValidationTel(true);
+            }else {
+                setValidationTel(false);
+            }
+            if(profile.length === 0) {
+                setValidationProfile(true);
+            }else {
+                setValidationProfile(false);
+            }
+            return;
+        }
+        setValidationFirstName(false);
+        setValidationLastName(false);
+        setValidationEmail(false);
+        setValidationTel(false);
+        setValidationProfile(false);
         e.preventDefault();
         const bodyFormData = new FormData();
         bodyFormData.append("Firstname", firstName);
@@ -149,6 +192,12 @@ export default function Navbar(props) {
             manageAdmin: false,
         }
     );
+
+    const [validationFirstName, setValidationFirstName] = useState(false);
+    const [validationLastName, setValidationLastName] = useState(false);
+    const [validationEmail, setValidationEmail] = useState(false);
+    const [validationTel, setValidationTel] = useState(false);
+    const [validationProfile, setValidationProfile] = useState(false);
 
     const location = useLocation();
     useEffect(()=>{
@@ -313,7 +362,7 @@ export default function Navbar(props) {
                     <div className="modal-container-main">
                         <div className="modal-item-register-main">
                             <div className="title-form-modal-register-main">
-                                สร้างบัญชีผู้ใช้ใหม่
+                                สร้างบัญชีแอดมินใหม่
                             </div>
                             {
                                 profile && profile.length !== 0 ?
@@ -372,23 +421,46 @@ export default function Navbar(props) {
                                 </div>
                                 )
                             }
-                            
                             <div className="rows-form-create-admin">
-                                <label className="label-form-create-admin">ชื่อจริง</label>
+                                {validationProfile ? 
+                                <div style={{display: 'flex', width: '100%', height: 'auto', justifyContent: 'center', margin: '0'}} className="validation-createpost">
+                                    *กรุณาเลือกภาพของผู้ใช้
+                                </div>
+                                :
+                                <></>
+                                }
+                            </div>
+                            <div className="rows-form-create-admin">
+                                <label className="label-form-create-admin">ชื่อจริง 
+                                    <div className={validationFirstName ? "validation-createpost" : "focus-warning"}>
+                                        *กรุณากรอกชื่อจริง
+                                    </div></label>
                                 <input className="input-form-create-admin" type="text" value={firstName} onChange={(e)=>{setFirstName(e.target.value)}} placeholder="กรุณากรอกชื่อจริง"/>
                             </div>
                             <div className="rows-form-create-admin">
-                                <label className="label-form-create-admin">นามสกุล</label>
+                                <label className="label-form-create-admin">นามสกุล
+                                    <div className={validationLastName ? "validation-createpost" : "focus-warning"}>
+                                        *กรุณากรอกนามสกุล
+                                    </div>
+                                </label>
                                 <input className="input-form-create-admin" type="text" value={lastName} onChange={(e)=>{setLastName(e.target.value)}} placeholder="กรุณากรอกนามสกุล"/>
                             </div>
                             <div className="rows-form-create-admin">
-                                <label className="label-form-create-admin">เพศ</label>
+                                <label className="label-form-create-admin">เพศ
+                                    <div className="focus-warning">
+                                        *กรุณาเลือกเพศ
+                                    </div>
+                                </label>
                                 <select style={{minWidth: '100%'}} className="select-form-register" value={gender} onChange={(e)=>{setgender(e.target.value)}}>
                                     {selectGender}
                                 </select>
                             </div>
                             <div className="rows-form-create-admin">
-                                <label className="label-form-create-admin">วัน/เดือน/ปีเกิด (กรอกเป็นตัวเลข)</label>
+                                <label className="label-form-create-admin">วัน/เดือน/ปีเกิด 
+                                    <div className="focus-warning">
+                                        *กรุณาเลือกวัน/เดือน/ปี
+                                    </div>
+                                </label>
                                 <div className="rows-form-date-admin">
                                     <div style={{marginTop: '0'}} className="rows-form-create-admin">
                                         <select  style={{minWidth: '65px'}} className="select-form-register"  value={day} onChange={(e)=>{setDay(e.target.value)}}>
@@ -408,7 +480,12 @@ export default function Navbar(props) {
                                 </div>
                             </div>
                             <div className="rows-form-create-admin">
-                                <label className="label-form-create-admin">ระดับแอดมิน</label>
+                                <label className="label-form-create-admin">
+                                    ระดับแอดมิน
+                                    <div className="focus-warning">
+                                        *กรุณาเลือกระดับแอดมิน
+                                    </div>
+                                </label>
                                 <div className="rows-form-date-admin">
                                     <div className="rows-form-date-admin" style={{alignItems: 'center', width: '120px'}}>
                                         <input name="type_person" style={{margin: '0 5px 0 0'}} className="input-form-create-admin" defaultChecked={true} type="radio" value="Admin" onChange={(e)=>{setTypeAdmin(e.target.value)}}/>
@@ -426,17 +503,29 @@ export default function Navbar(props) {
                                 </div>
                             </div>
                             <div className="rows-form-create-admin">
-                                <label className="label-form-create-admin">เบอร์โทร</label>
-                                <input className="input-form-create-admin" type="text" value={tel} onChange={(e)=>{setTel(e.target.value)}} placeholder="กรุณากรอกเบอร์โทร"/>
-                            </div>
-                            <div className="rows-form-create-admin">
-                                <label className="label-form-create-admin">อีเมล</label>
+                                <label className="label-form-create-admin">อีเมล
+                                    <div className={validationEmail ? "validation-createpost" : "focus-warning"}>
+                                        *กรุณากรอกอีเมลของคุณ
+                                    </div>
+                                </label>
                                 <input className="input-form-create-admin" type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}} placeholder="กรุณากรอก e-mail"/>
                             </div>
                             <div className="rows-form-create-admin">
-                                <label className="label-form-create-admin">เลขบัตรประชาชน</label>
-                                <input className="input-form-create-admin" type="text" value={idCard} onChange={(e)=>{setidCard(e.target.value)}} placeholder="กรุณากรอกเลขบัตรประชาชน"/>
+                                <label className="label-form-create-admin">เบอร์โทร
+                                    <div className={validationTel ? "validation-createpost" : "focus-warning"}>
+                                        *กรุณากรอกเบอร์โทรของคุณ
+                                    </div>
+                                </label>
+                                <input className="input-form-create-admin" type="text" value={tel} onChange={(e)=>{setTel(e.target.value)}} placeholder="กรุณากรอกเบอร์โทร"/>
                             </div>
+                            {/* <div className="rows-form-create-admin">
+                                <label className="label-form-create-admin">เลขบัตรประชาชน
+                                    <div className="focus-warning">
+                                        *กรุณากรอกเลขบัตรประชาชนของคุณ
+                                    </div>
+                                </label>
+                                <input className="input-form-create-admin" type="text" value={idCard} onChange={(e)=>{setidCard(e.target.value)}} placeholder="กรุณากรอกเลขบัตรประชาชน"/>
+                            </div> */}
                             <div className="rows-form-create-admin">
                                 <button style={{
                                     display: 'flex',
@@ -451,7 +540,7 @@ export default function Navbar(props) {
                                     backgroundColor: '#FFBE36',
                                     cursor: 'pointer'
                                 }}
-                                onClick={(e)=>{hadleCreatePost(e)}}
+                                onClick={(e)=>{hadleCreateAccout(e)}}
                                 >
                                     สร้างบัญชี
                                 </button>
@@ -481,7 +570,7 @@ export default function Navbar(props) {
                 <div className="area-menu-bottom-navbar">
                     <div className="area-menu-bottom">
                         <div className="container-menuinnavbar">
-                            <div className="area-icon-logout-menuinnavbar">
+                            <div className="area-icon-profile-menuinnavbar">
                                 <img className="images-full" src={userdetail.profile} alt=""/>
                             </div>
                             <Link className="link-set-default-navbar" to="/profile">

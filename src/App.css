@@ -154,7 +154,7 @@ body {
   border-radius: 50%;
   border: 0 solid;
   transition: all .3s ease;
-  background-color: #cdcdcd;
+  background-color: #f1f1f1;
 }
 
 /* .modal-image-profile-item-main:hover {

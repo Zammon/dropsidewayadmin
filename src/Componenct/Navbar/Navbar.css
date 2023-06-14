@@ -113,6 +113,11 @@
     /* background-color: crimson; */
 }
 
+.focus-warning {
+    margin-left: 10px;
+    color: #BDBDBD;
+}
+
 .modal-item-register-main {
   position: relative;
   display: flex;
@@ -127,6 +132,7 @@
 }
 
 .label-form-create-admin {
+    display: flex;
     font-size: 13px;
     font-weight: 700;
 }

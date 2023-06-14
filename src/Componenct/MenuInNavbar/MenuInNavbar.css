@@ -11,12 +11,12 @@
 
 .area-menu-active {
     background-color: #193B56;
-    transition: all .3s ease;
+    transition: all .5s ease;
 }
 
 .area-menu-none-active {
     background-color: #fff;
-    transition: all .25s ease;
+    transition: all .0s ease;
 }
 /* Icon  */
 .area-icon-menuinnavbar {
@@ -83,5 +83,18 @@
     border-radius: 50%;
     overflow: hidden;
     background-color: #E50158;
+    margin-right: 16px;
+}
+
+.area-icon-profile-menuinnavbar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ffffff;
+    border: 1px solid rgb(212, 212, 212);
     margin-right: 16px;
 }
